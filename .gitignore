@@ -6,3 +6,9 @@
 
 # ignore ALL files started with ~
 ~*
+
+# ignore ALL files started with .~
+.~*
+
+# ignore ALL files finish with .dkp
+*.dkp
