@@ -3,3 +3,6 @@
 
 # ignore ALL files in ANY directory named .idea
 .idea/
+
+# ignore ALL files started with ~
+~*
