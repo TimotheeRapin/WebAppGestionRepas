@@ -1,0 +1,276 @@
+/**
+ * Projet                      TPI - Application web pour la gestion des repas en lien avec les commissions et le budget
+ * @file                       style.css
+ * @brief                      This file contains the css for the website (This file comes from my portfolio)
+ * @author                     Created by Timothée RAPIN
+ * Date de création            10.03.2023
+ * update                      10.03.2023
+ * @version                    1.0
+ * @note                       Création du fichier css
+ */
+
+:root {
+    /* Variables */
+
+    /* Colors */
+    --text-dark: #000000;
+    --text-dark-gray: #404040;
+    --text-light-gray: #BFBFBF;
+    --text-light: #FFFFFF;
+
+    --danger-dark: #CC0000;
+    --danger: #FF4444;
+    --warning-dark: #FF8800;
+    --warning: #FFBB33;
+    --success-dark: #007E33;
+    --success: #00C851;
+    --information-dark: #0099CC;
+    --information: #33B5E5;
+
+    --main-dark: #282828;
+    --main: #404040;
+    --main-light: #606060;
+    --primary-dark: #AA5500;
+    --primary: #FF8800;
+    --primary-light: #FFAA55;
+    --secondary-dark: #00CBCC;
+    --secondary: #00FFFF;
+    --secondary-light: #72FFFF;
+}
+
+
+body {
+    /*permet que le footer soit correct*/
+    position: relative;
+    min-height: 100vh;
+
+    margin: 0;
+    padding: 0;
+    padding-bottom: 10rem;
+    background: var(--main);
+
+    color: var(--text-light-gray);
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    font-size: 24px;
+
+    overflow-x: hidden;
+
+    /* interligne minimum */
+    line-height: 1.5;
+}
+
+section {
+    border-top: 1px solid var(--primary);
+}
+
+h1{
+    text-align: center;
+    font-size: 5rem;
+    margin: 5rem;
+    color: var(--text-light);
+}
+
+h2{
+    text-align: center;
+    font-size: 3rem;
+    margin: 3rem;
+    color: var(--text-light);
+}
+
+a{
+    color: var(--primary);
+    /*text-decoration: underline;*/
+}
+
+a:hover {
+    color: var(--primary-dark);
+    transition: color 0.3s ease;
+    /*letter-spacing: 2px ;*/
+}
+
+p{
+    margin: 3rem;
+    font-size: 1.5rem;
+}
+
+/* Conteneur principal */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* En-tête */
+header {
+    background-color: var(--main-dark);
+    position:static;
+    width: 100%;
+    z-index: 1;
+}
+
+
+
+
+/* Navigation */
+nav {
+    position: sticky;
+    top: 0;
+    width:100%;
+    background: var(--main-dark);
+    text-align: center;
+    z-index: 8;
+}
+
+ul {
+    display: inline;
+    margin: auto;
+    text-align: center;
+    padding: 0;
+    height: auto;
+    list-style: none;
+    background-color: inherit;
+}
+ul li {
+    display: inline-block;
+    position: relative;
+    font-weight:bolder;
+    padding: 0.5rem 1.5rem;
+    /*background: var(--primary);*/
+    color: var(--primary);
+
+    margin: 0;
+    height: 50px;
+    min-width: max-content;
+    text-align: center;
+    line-height: 50px;
+    list-style: none;
+    text-transform: capitalize;
+    /*text-transform: capitalize;*/
+}
+ul li a:hover {
+    color: var(--main-light);
+    transition: color 0.3s ease;
+    /*letter-spacing: 2px ;*/
+}
+
+ul li ul {
+    padding: 0;
+    position: absolute;
+    top: 4rem;
+    left: 0;
+    /*width: auto;*/
+    display: none;
+}
+ul li ul li {
+    background: inherit;
+    display: block;
+    margin: 0 auto;
+    text-align: left;
+}
+ul li ul li:hover { background: rgb(0,20,100); }
+ul li:hover ul { display: block;}
+
+
+
+
+/* Contenu */
+#content {
+    margin-top: 100px;
+}
+
+/* Espacement des tabulations */
+&nbsp; {
+    display: inline-block;
+    width: 4rem;
+}
+
+/* Sections */
+section {
+    padding: 2rem 0;
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    nav ul li {
+        margin: 1rem 0;
+    }
+}
+
+/* Pied de page */
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 2rem 0;
+    background: var(--main-dark);
+    text-align: center;
+    z-index: 10;
+}
+
+
+img {
+    display: block;
+    margin: 50px auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+    width: 150px;
+}
+
+
+/* Tableau */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: var(--main-light);
+}
+
+table td, table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+
+
+table tr:hover {
+    background-color: var(--main-dark);
+    color: var(--text-light);
+}
+
+table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: var(--primary);
+    color: var(--text-dark);
+}
+
+#social-networks{
+    width: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    border: none;
+}
+
+#social-networks ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*margin: 0 auto;*/
+}
+
+a img{
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    border: none;
+}
