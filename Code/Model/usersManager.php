@@ -288,6 +288,11 @@ function getUserId($userEmailAddress)
     return $queryResult;
 }
 
+/**
+ * @brief This function get the type of the user
+ * @param $userEmailAddress
+ * @return mixed
+ */
 function getUserType($userEmailAddress)
 {
     $strSeparator = "'";
@@ -297,4 +302,22 @@ function getUserType($userEmailAddress)
     $queryResult = executeQuerySelect($query);
     $queryResult = $queryResult[0];
     return $queryResult;
+}
+
+/**
+ * @brief This function get the type of the user
+ * @return array
+ */
+function getUserList(){
+    require_once 'Model/dbConnector.php';
+
+    $query = "SELECT accounts.id, accounts.firstName, accounts.lastName, accounts.email FROM accounts WHERE accounts.type = 'User' ORDER BY accounts.lastName ASC";
+    $queryResult = executeQuerySelect($query);
+    $userList[0] = $queryResult;
+
+    $query = "SELECT accounts.id, accounts.firstName, accounts.lastName, accounts.email FROM accounts WHERE accounts.type = 'Administrator' ORDER BY accounts.lastName ASC";
+    $queryResult = executeQuerySelect($query);
+    $userList[1] = $queryResult;
+
+    return $userList;
 }

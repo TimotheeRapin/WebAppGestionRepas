@@ -86,3 +86,15 @@ function register($data)
     require_once 'Model/usersManager.php';
     userManage($data);
 }
+
+/**
+ * @brief This function is designed to display the user list page
+ */
+function usersList()
+{
+    require_once "Model/usersManager.php";
+    $userList = getUserList();
+    $users = $userList[0];
+    $administrators = $userList[1];
+    require_once "View/usersList.php";
+}

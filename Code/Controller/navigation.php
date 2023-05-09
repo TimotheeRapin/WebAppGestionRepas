@@ -43,14 +43,6 @@ function shoppingList()
 }
 
 /**
- * @brief This function is designed to display the user list page
- */
-function usersList()
-{
-    require_once "View/usersList.php";
-}
-
-/**
  * @brief This function is designed to display the signs list page
  */
 function signsList()
