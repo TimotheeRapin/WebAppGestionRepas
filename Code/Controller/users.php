@@ -5,8 +5,9 @@
  * @brief                   This file is designed to manage the users
  * @author                  Created by Timothée RAPIN
  * Creation date            05.05.2021
- * update                   05.05.2021
- * @version                 0.1
+ * update                   11.05.2021
+ * @version                 1.0
+ * @note                    Add users management
  */
 
 /**
@@ -122,4 +123,9 @@ function userDelete($data){
     }
 
     usersList();
+}
+
+function userAdd($data){
+    require_once "Model/usersManager.php";
+    addUser($data);
 }

@@ -5,8 +5,9 @@
  * @brief                   This file is designed to manage the users
  * @author                  Created by Timothée RAPIN
  * Date de création         09.05.2023
- * update                   09.05.2023
- * @version                 0.1
+ * update                   11.05.2023
+ * @version                 1.0
+ * @note                    Add users management
  */
 
 require_once "Model/dbConnector.php";
@@ -384,5 +385,83 @@ function deleteAdministrator($userId){
         $queryResult = executeQueryDelete($query);
     } else {
         $registerErrorMessage = "Il faut minimum 1 Administrateur !";
+    }
+}
+
+
+/**
+ * @brief This function is designed to update a user
+ * @param $data
+ */
+function addUser($data){
+    try {
+        //variable set
+        if (isset($data['inputUserEmailAddress']) && isset($data['inputUserPsw']) && isset($data['inputUserPswRepeat'])) {
+
+            $strSeparator = "'";
+            $query = "SELECT accounts.firstName, accounts.lastName, accounts.email, accounts.password FROM accounts WHERE accounts.email = " . $strSeparator . $data['inputUserEmailAddress'] . $strSeparator;
+            $user = executeQuerySelect($query);
+
+            // Test si l'email existe déjà
+            $existAccount = false;
+            if (isset($user) && $user!="" && $user!=null && $user!=$data['type']){
+                $dataUser = $user;
+                $id = $user['id'];
+                $existAccount = true;
+            }
+
+            // Si l'email n'existe pas dans la BDD
+            if ($existAccount == false){
+
+                // Si tout les champs sont remplis
+                if($data['inputUserFirstName'] != "" && $data['inputUserLastName'] != "" && $data['inputUserEmailAddress'] != "" && $data['inputUserPsw'] != "" && $data['inputUserPswRepeat'] != ""){
+
+                    // Si le mail est valide
+                    if (filter_var($data['inputUserEmailAddress'], FILTER_VALIDATE_EMAIL)) {
+
+                        // Si l'utilisateur à entré 2 fois le même mot de passe
+                        if ($data['inputUserPsw'] == $data['inputUserPswRepeat']) {
+                            require_once "Model/usersManager.php";
+
+                            // Si le compte à bien été créé dans la BDD
+                            if (registerAccount($data['inputUserFirstName'], $data['inputUserLastName'], $data['inputUserEmailAddress'], $data['inputUserPsw'])) {
+                                $registerErrorMessage = null;
+                                require "View/usersList.php";
+                            } else {
+                                $registerErrorMessage = "L'inscription n'est pas possible avec les valeurs saisies !";
+                                require "View/register.php";
+                            }
+
+                        } else {
+                            $registerErrorMessage = "Les mots de passe ne sont pas similaires !";
+                            require "View/register.php";
+                        }
+                    }
+                    else
+                    {
+                        $registerErrorMessage = "L'adresse email n'est pas valide !";
+                        require "View/register.php";
+                    }
+                }
+                else
+                {
+                    $registerErrorMessage = "Tous les champs doivent être remplis !";
+                    require "View/register.php";
+                }
+            }
+            else{
+                $registerErrorMessage = "L'adresse email existe déjà !";
+                require "View/register.php";
+            }
+        }
+        else
+        {
+            $registerErrorMessage = null;
+            require "View/register.php";
+        }
+
+    } catch (ModelDataBaseException $ex) {
+        $registerErrorMessage = "Nous rencontrons actuellement un problème technique. Il est temporairement impossible de s'enregistrer. Désolé du dérangement !";
+        require "View/register.php";
     }
 }

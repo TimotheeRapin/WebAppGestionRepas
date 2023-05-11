@@ -5,20 +5,20 @@
  * @brief                   This file is designed to manage the navigation of the site
  * @author                  Created by Timothée RAPIN
  * Creation date            05.05.2023
- * update                   05.05.2023
- * @version                 0.1
- * @note                    Creation of this file
+ * update                   11.05.2023
+ * @version                 1.0
+ * @note                    Add users management
  */
 
 
 // Start a new session
 session_start();
 
-// Include the file "Controller/navigation.php"
+// Include the controller files
 require_once "Controller/navigation.php";
 require_once "Controller/users.php";
+require_once "Controller/signs.php";
 
-// Check if the GET parameter 'action' is set
 if (isset($_GET['action'])) {
 
     // Store the value of 'action' in a variable
@@ -43,7 +43,7 @@ if (isset($_GET['action'])) {
             break;
 
         case 'usersAdd' :
-            usersAdd($_POST);
+            userAdd($_POST);
             break;
         case 'usersList' :
             usersList();
@@ -100,6 +100,16 @@ if (isset($_GET['action'])) {
             break;
         case 'shoppingListDelete' :
             shoppingListDelete($_POST);
+            break;
+
+        case 'signsAdd' :
+            signAdd($_POST);
+            break;
+        case 'signsList' :
+            signsList();
+            break;
+        case 'signsDelete' :
+            signsDelete($_POST);
             break;
 
         // If the value of 'action' is not recognized, call the 'lost' function

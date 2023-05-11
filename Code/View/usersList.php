@@ -5,15 +5,16 @@
  * @brief                   This file is designed to display the users list page
  * @author                  Created by Timothée RAPIN
  * Date de création         09.05.2023
- * update                   09.05.2023
- * @version                 0.1
+ * update                   11.05.2023
+ * @version                 1.0
+ * @note                    delete users
  */
 
 // Start output buffering
 ob_start();
 
 // Define the title of the page
-$title = 'Kaizen Classroom - Liste des utilisateurs';
+$title = 'Application web pour la gestion des repas en lien avec les commissions et le budget - Liste des utilisateurs';
 ?>
 
     <!-- Page content -->
@@ -70,7 +71,7 @@ $title = 'Kaizen Classroom - Liste des utilisateurs';
                 </tr>
             <?php endforeach; ?>
         </table>
-        <a href="index.php?action=usersAdd">
+        <a href="index.php?action=usersAdd&type=User">
             <button>Ajouter un utilisateur</button>
         </a>
 
