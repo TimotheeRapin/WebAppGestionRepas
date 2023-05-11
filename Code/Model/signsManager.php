@@ -103,3 +103,11 @@ function signsAdd($signName)
 
     return $result;
 }
+
+function deleteSign($signId){
+    $signId = intval($signId); // Conversion en int
+
+    $strSeparator = "'";
+    $query = "DELETE FROM signs WHERE signs.id = " . $strSeparator . $signId . $strSeparator;
+    $queryResult = executeQueryDelete($query);
+}

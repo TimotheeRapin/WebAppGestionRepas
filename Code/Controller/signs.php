@@ -33,3 +33,12 @@ function signAdd($data)
     signsManage($data);
     require_once 'Model/signsManager.php';
 }
+
+/**
+ * @brief This function is designed to delete a sign from the database
+ */
+function signsDelete($data){
+
+    deleteSign($data['id']);
+    signsList();
+}

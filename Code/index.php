@@ -109,7 +109,7 @@ if (isset($_GET['action'])) {
             signsList();
             break;
         case 'signsDelete' :
-            signsDelete($_POST);
+            signsDelete($_GET);
             break;
 
         // If the value of 'action' is not recognized, call the 'lost' function
