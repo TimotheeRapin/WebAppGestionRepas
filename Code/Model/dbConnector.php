@@ -70,6 +70,25 @@ function executeQueryUpdate($query)
     return $queryResult;
 }
 
+/**
+ * @brief This function is designed to execute a query delete
+ * @param $query
+ * @return true|null
+ */
+function executeQueryDelete($query)
+{
+    $queryResult = null;
+
+    $dbConnexion = openDBConnexion();                  // Ouvre la connection à la BD
+    if ($dbConnexion != null) {
+        $statement = $dbConnexion->prepare($query);     // Préparation de la requête
+        $statement->execute();                          // Execution de la requête
+        $queryResult = true;
+    }
+    $dbConnexion = null;                                // Fermeture de ma connection à la DB
+    return $queryResult;
+}
+
 
 /**
  * @brief This function is designed to open a connection to the database

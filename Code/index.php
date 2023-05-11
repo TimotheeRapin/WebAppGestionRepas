@@ -49,7 +49,7 @@ if (isset($_GET['action'])) {
             usersList();
             break;
         case 'usersDelete' :
-            usersDelete($_POST);
+            userDelete($_GET);
             break;
 
         case 'menusAdd' :

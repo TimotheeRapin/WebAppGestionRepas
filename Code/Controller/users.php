@@ -98,3 +98,28 @@ function usersList()
     $administrators = $userList[1];
     require_once "View/usersList.php";
 }
+
+/**
+ * @brief This function is designed to delete a user
+ * @param $data
+ * @return void
+ */
+function userDelete($data){
+    require_once "Model/usersManager.php";
+
+    $UserEmail = getUserEmail($data['id']);
+    $userType = getUserType($UserEmail[0]);
+    $userType = $userType[0];
+
+    if ($userType == 'Administrator') {
+        deleteAdministrator($data['id']);
+    }
+    elseif ($userType == 'User') {
+        deleteUser($data['id']);
+    }
+    else {
+        throw new ModelDataBaseException("Le type d'utilisateur n'existe pas !");
+    }
+
+    usersList();
+}

@@ -114,30 +114,43 @@ function userManage($data){
             // Si l'email n'existe pas dans la BDD
             if ($existAccount == false){
 
-                // Si l'utilisateur à entré 2 fois le même mot de passe
-                if ($data['inputUserPsw'] == $data['inputUserPswRepeat']) {
-                    require_once "Model/usersManager.php";
+                // Si tout les champs sont remplis
+                if($data['inputUserFirstName'] != "" && $data['inputUserLastName'] != "" && $data['inputUserEmailAddress'] != "" && $data['inputUserPsw'] != "" && $data['inputUserPswRepeat'] != ""){
 
-                    // Si le compte à bien été créé dans la BDD
-                    if (registerAccount($data['inputUserFirstName'], $data['inputUserLastName'], $data['inputUserEmailAddress'], $data['inputUserPsw']))
-                    {
-                        // Crée la séssion si elle n'éxiste pas
-                        if (!isset($_SESSION['userEmailAddress'])){
-                            createSession($data['inputUserEmailAddress'],0);
+                    // Si le mail est valide
+                    if (filter_var($data['inputUserEmailAddress'], FILTER_VALIDATE_EMAIL)) {
+
+                        // Si l'utilisateur à entré 2 fois le même mot de passe
+                        if ($data['inputUserPsw'] == $data['inputUserPswRepeat']) {
+                            require_once "Model/usersManager.php";
+
+                            // Si le compte à bien été créé dans la BDD
+                            if (registerAccount($data['inputUserFirstName'], $data['inputUserLastName'], $data['inputUserEmailAddress'], $data['inputUserPsw'])) {
+                                // Crée la séssion si elle n'éxiste pas
+                                if (!isset($_SESSION['userEmailAddress'])) {
+                                    createSession($data['inputUserEmailAddress'], 0);
+                                }
+                                $registerErrorMessage = null;
+                                require "View/home.php";
+                            } else {
+                                $registerErrorMessage = "L'inscription n'est pas possible avec les valeurs saisies !";
+                                require "View/register.php";
+                            }
+
+                        } else {
+                            $registerErrorMessage = "Les mots de passe ne sont pas similaires !";
+                            require "View/register.php";
                         }
-                        $registerErrorMessage = null;
-                        require "View/home.php";
                     }
                     else
                     {
-                        $registerErrorMessage = "L'inscription n'est pas possible avec les valeurs saisies !";
+                        $registerErrorMessage = "L'adresse email n'est pas valide !";
                         require "View/register.php";
                     }
-
                 }
                 else
                 {
-                    $registerErrorMessage = "Les mots de passe ne sont pas similaires !";
+                    $registerErrorMessage = "Tous les champs doivent être remplis !";
                     require "View/register.php";
                 }
             }
@@ -320,4 +333,56 @@ function getUserList(){
     $userList[1] = $queryResult;
 
     return $userList;
+}
+
+/**
+ * @brief This function get the email of the user with his id
+ * @return array
+ */
+function getUserEmail($userId){
+    require_once 'Model/dbConnector.php';
+
+    $strSeparator = "'";
+    $query = "SELECT accounts.email FROM accounts WHERE accounts.id = " . $strSeparator . $userId . $strSeparator;
+    $queryResult = executeQuerySelect($query);
+    $queryResult = $queryResult[0];
+    return $queryResult;
+}
+
+/**
+ * @brief This function is designed to delete a user
+ * @return array
+ */
+function deleteUser($userId){
+    require_once 'Model/dbConnector.php';
+
+    $userId = intval($userId); // Conversion en int
+
+    $strSeparator = "'";
+    $query = "DELETE FROM accounts WHERE accounts.id = " . $strSeparator . $userId . $strSeparator;
+    $queryResult = executeQueryDelete($query);
+}
+
+/**
+ * @brief This function is designed to delete an administrator if there is more than 1 administrator
+ * @return array
+ */
+function deleteAdministrator($userId){
+    require_once 'Model/dbConnector.php';
+    $userId = intval($userId); // Conversion en int
+
+    $query = "SELECT count(accounts.id) FROM accounts WHERE accounts.type = 'Administrator'";
+    $nbAdmin = executeQuerySelect($query);
+    $nbAdmin = $nbAdmin[0][0];
+
+    // S'il y a toujours 1 administrateur
+    //if ($nbAdmin > 1 || $userId != $userIdSession) {
+    if ($nbAdmin > 1) {
+
+        $strSeparator = "'";
+        $query = "DELETE FROM accounts WHERE accounts.id = " . $strSeparator . $userId . $strSeparator;
+        $queryResult = executeQueryDelete($query);
+    } else {
+        $registerErrorMessage = "Il faut minimum 1 Administrateur !";
+    }
 }

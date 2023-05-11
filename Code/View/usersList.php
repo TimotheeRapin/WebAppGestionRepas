@@ -46,7 +46,7 @@ $title = 'Kaizen Classroom - Liste des utilisateurs';
                     </td>
                     -->
                     <td>
-                        <a href="index.php?action=deleteUser&id=<?=$user['id']; ?>">
+                        <a href="index.php?action=usersDelete&id=<?=$user['id']; ?>">
                             <button>Supprimer</button>
                             <!-- SVG delete icon --><!--
                             <svg width="100" height="100">
@@ -70,6 +70,9 @@ $title = 'Kaizen Classroom - Liste des utilisateurs';
                 </tr>
             <?php endforeach; ?>
         </table>
+        <a href="index.php?action=usersAdd">
+            <button>Ajouter un utilisateur</button>
+        </a>
 
         <h2>Administrateurs</h2>
         <table class="userList">
@@ -80,8 +83,8 @@ $title = 'Kaizen Classroom - Liste des utilisateurs';
                 <th>Email</th>
                 <!--
                 <th>Modifier</th>
-                <th>Supprimer</th>
                 -->
+                <th>Supprimer</th>
             </tr>
             </thead>
             <?php foreach ($administrators as $administrator): ?>
@@ -90,17 +93,17 @@ $title = 'Kaizen Classroom - Liste des utilisateurs';
                     <td><?=$administrator['lastName']; ?></td>
                     <td><?=$administrator['email']; ?></td>
                     <!--
-                <td>
-                    <a href="index.php?action=updateUser&id=<?=$administrator->id; ?>">
-                        <button>Modifier</button>
-                    </a>
-                </td>
-                <td>
-                    <a href="index.php?action=deleteUser&id=<?=$administrator->id; ?>">
-                        <button>Supprimer</button>
-                    </a>
-                </td>
-                -->
+                    <td>
+                        <a href="index.php?action=userUpdate&id=<?=$administrator->id; ?>">
+                            <button>Modifier</button>
+                        </a>
+                    </td>
+                    -->
+                    <td>
+                        <a href="index.php?action=usersDelete&id=<?=$administrator['id']; ?>">
+                            <button>Supprimer</button>
+                        </a>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </table>
