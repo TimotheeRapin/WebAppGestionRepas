@@ -43,14 +43,6 @@ function shoppingList()
 }
 
 /**
- * @brief This function is designed to display the articles list page
- */
-function articlesList()
-{
-    require_once "View/articlesList.php";
-}
-
-/**
  * @brief This function is designed to inform the user that the resource requested doesn't exist (if the user modify the url manually)
  */
 function lost()

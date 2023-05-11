@@ -18,6 +18,7 @@ session_start();
 require_once "Controller/navigation.php";
 require_once "Controller/users.php";
 require_once "Controller/signs.php";
+require_once "Controller/articles.php";
 
 if (isset($_GET['action'])) {
 
