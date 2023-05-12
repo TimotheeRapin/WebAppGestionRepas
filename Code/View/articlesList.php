@@ -6,7 +6,7 @@
  * @author                  Created by Timothée RAPIN
  * Creation date            11.05.2023
  * update                   11.05.2023
- * @version                 0.1
+ * @version                 1.0
  * @note                    Creation of this file
  */
 
@@ -29,17 +29,24 @@ $title = 'Application web pour la gestion des repas en lien avec les commissions
         <table class="userList">
             <thead>
             <tr>
-                <th>Nom</th>
-                <th>Quantité</th>
-                <th>Description</th>
+                <th rowspan="2">Nom</th>
+                <th rowspan="2">Quantité</th>
+                <th rowspan="2">Description</th>
+                <!-- Prix par enseigne -->
+                <?php foreach ($signs as $sign): ?>
+                    <th> Prix (CHF)</th>
+                <?php endforeach; ?>
+
+                <!--
+                <th>Modifier</th>
+                -->
+                <th rowspan="2">Supprimer</th>
+            </tr>
+            <tr>
                 <!-- Prix par enseigne -->
                 <?php foreach ($signs as $sign): ?>
                     <th><?=$sign['name']; ?></th>
                 <?php endforeach; ?>
-                <!--
-                <th>Modifier</th>
-                -->
-                <th>Supprimer</th>
             </tr>
             </thead>
             <?php foreach ($articles as $article): ?>
@@ -59,7 +66,7 @@ $title = 'Application web pour la gestion des repas en lien avec les commissions
                     ?>
                         <td>
                             <?php
-                                echo $article['price'][$i];
+                                echo $article['prices'][$i];
                                 $i++;
                             ?>
                         </td>

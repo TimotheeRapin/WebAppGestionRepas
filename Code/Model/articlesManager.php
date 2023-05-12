@@ -14,16 +14,34 @@ require_once "dbConnector.php";
 
 function getArticlesList()
 {
-    $query = "SELECT articles.id, articles.name, articles.quantity, articles.description, articles.unity FROM articles ORDER BY articles.name ASC";
+    $query = "SELECT articles.id, articles.name, articles.quantity, articles.description, articles.unity, signs.name AS signs, signs_has_articles.price
+                FROM articles
+                CROSS JOIN signs /* Permet de récupérer toutes les enseignes et ainsi avoir une colonne par enseigne même s il n y a pas de prix dans cete enseigne.
+                                    Cela permet de faire un tableau avec toujours la m'ême valeur pour chaque enseignes et éviter les décalages.
+                                    Sources : https://www.w3schools.com/mysql/mysql_join_cross.asp*/
+                LEFT JOIN signs_has_articles ON articles.id = signs_has_articles.articles_id 
+                AND signs.id = signs_has_articles.signs_id
+                ORDER BY articles.name ASC;";
     $queryResult = executeQuerySelect($query);
 
-    foreach ($queryResult['id'] as $articleId){
-        foreach ($signs as $sign){
-            $query = "SELECT signs_has_articles.price FROM signs_has_articles WHERE signs_has_articles.id_articles = " . $articleId . " AND signs_has_articles.id_signs = " . $sign['id'];
-            $price = executeQuerySelect($query);
-            $queryResult[$articleId]['price'] = $price[$articleId]['price'];
-        }
-    }
 
+    $articles = array();
+    foreach ($queryResult as $row) {
+        $articleId = $row['id'];
+        // Permet de rassembler les articles qui ont le même id dans une même ligne
+        if (!isset($articles[$articleId])) {
+            $articles[$articleId] = array(
+                'id' => $row['id'],
+                'name' => $row['name'],
+                'quantity' => $row['quantity'],
+                'description' => $row['description'],
+                'unity' => $row['unity'],
+                'prices' => array()  // Tableau vide pour stocker les prix
+            );
+        }
+        // Ajoutez le prix pour chaques enseignes à la liste des prix de l'article
+        $articles[$articleId]['prices'][] = $row['price'];
+    }
+    $queryResult = $articles;
     return $queryResult;
 }

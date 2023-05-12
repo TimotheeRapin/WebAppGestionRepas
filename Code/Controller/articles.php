@@ -20,6 +20,7 @@ function articlesList()
 {
     // Get all the articles from the database
     $articles = getArticlesList();
+    $signs = getSignsList();
 
     // Call the view 'articlesList' to display the articles list
     require_once "View/articlesList.php";
