@@ -25,3 +25,10 @@ function articlesList()
     // Call the view 'articlesList' to display the articles list
     require_once "View/articlesList.php";
 }
+
+/**
+ * @brief This function is designed to display the articles add form
+ */
+function articleAdd($data){
+    articleManage($data);
+}

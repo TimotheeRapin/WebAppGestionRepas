@@ -45,3 +45,114 @@ function getArticlesList()
     $queryResult = $articles;
     return $queryResult;
 }
+
+/**
+ * @brief This function is designed to manage the articles
+ * @param $data
+ * @return void
+ */
+function articleManage($data){
+    $signs = getSignsList();
+    try {
+
+        //variable set
+        if (isset($data['inputArticleName']) && isset($data['inputArticleQuantity']) && isset($data['inputArticleDescription']) && isset($data['inputArticleUnity'])) {
+
+            $strSeparator = "'";
+            //Test si l'article existe déjà (name+quantity)
+            $query = "SELECT articles.name, articles.quantity, articles.description, articles.unity FROM articles
+                      WHERE articles.name = " . $strSeparator . $data['inputArticleName'] . $strSeparator . "
+                        AND articles.quantity = " . $strSeparator . $data['inputArticleQuantity'] . $strSeparator . ";";
+            $article = executeQuerySelect($query);
+
+            // Test si l'article existe déjà (name+quantity)
+            $existArticle = false;
+            if (isset($article) && $article != "" && $article != null && $article != 0) {
+                $dataArticle = $article;
+                $id = $article['id'];
+                $existArticle = true;
+            }
+
+            // Si l'article n'existe pas dans la BDD
+            if ($existArticle == false) {
+
+                // Si tout les champs sont remplis
+                if ($data['inputArticleName'] != "" && $data['inputArticleQuantity'] != "" && $data['inputArticleUnity'] != "") {
+
+                    // Si la quantité est un nombre
+                    if (is_numeric($data['inputArticleQuantity'])) {
+
+                        // Si la quantité est positive
+                        if ($data['inputArticleQuantity'] > 0) {
+
+                            // Si l'unité est valide
+                            if ($data['inputArticleUnity'] == "g" || $data['inputArticleUnity'] == "kg" || $data['inputArticleUnity'] == "ml" || $data['inputArticleUnity'] == "cl" || $data['inputArticleUnity'] == "l" || $data['inputArticleUnity'] == "pce") {
+
+                                // Si l'article à bien été créé dans la BDD
+                                if (createArticle($data['inputArticleName'], $data['inputArticleQuantity'], $data['inputArticleDescription'], $data['inputArticleUnity'])) {
+                                    $articleErrorMessage = null;
+                                    require "View/articlesList.php";
+                                } else {
+                                    $articleErrorMessage = "L'article n'a pas pu être créé !";
+                                    require "View/articleForm.php";
+                                }
+                            } else {
+                                $articleErrorMessage = "L'unité n'est pas valide !";
+                                require "View/articleForm.php";
+                            }
+                        } else {
+                            $articleErrorMessage = "La quantité doit être positive !";
+                            require "View/articleForm.php";
+                        }
+                    } else {
+                        $articleErrorMessage = "La quantité doit être un nombre !";
+                        require "View/articleForm.php";
+                    }
+                } else {
+                    $articleErrorMessage = "Tous les champs doivent être remplis !";
+                    require "View/articleForm.php";
+                }
+            } else {
+                $articleErrorMessage = "L'article existe déjà !";
+                require "View/articleForm.php";
+            }
+        } else {
+            $articleErrorMessage = null;
+            require "View/articleForm.php";
+        }
+
+    }
+    catch (ModelDataBaseException $ex) {
+        $articleErrorMessage = "Nous rencontrons actuellement un problème technique. Il est temporairement impossible de gérer les articles. Désolé du dérangement !";
+        require "View/articleForm.php";
+    }
+}
+
+/**
+ * @brief This function is designed to create an article
+ * @param $name
+ * @param $quantity
+ * @param $description
+ * @param $unity
+ * @return bool
+ */
+function createArticle($name, $quantity, $description, $unity){
+    $result = false;
+
+    $strSeparator = "'";
+
+    $articleAddQuery = "INSERT INTO articles (name, quantity, description, unity)
+                        VALUES ('$name', '$quantity', '$description', '$unity');";
+
+    $queryResult = executeQueryInsert($articleAddQuery);
+    if ($queryResult){
+        $result = $queryResult;
+
+        $articleId = getArticleId($name, $quantity, $unity);
+
+        $articleAddPriceQuery = "INSERT INTO signs_has_articles (signs_id, articles_id, price)
+                                VALUES ('$articleSignId', '$articleId', '$articlePrice');";
+    }
+
+    return $result;
+}

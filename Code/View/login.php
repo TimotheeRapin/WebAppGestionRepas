@@ -15,23 +15,15 @@ ob_start();
 // Define the title of the page
 $title = 'Application web pour la gestion des repas en lien avec les commissions et le budget - Connexion';
 ?>
-
-<?php if (isset($loginErrorMessage)) : ?>
-    <div class="popup">
-        <h2>
-            Erreur de connexion
-        </h2>
-        <div>
-            <?=$loginErrorMessage;?>
-        </div>
-        <br>
-        <input type="submit" value="OK" id="btnClose" class="btnClose">
-    </div>
-<?php endif ?>
     <!-- Page content -->
     <div id="page" class="container">
         <h1>Connexion</h1>
 
+        <?php if (isset($loginErrorMessage)): ?>
+            <div class="error">
+                <?= $loginErrorMessage ?><br><br>
+            </div>
+        <?php endif; ?>
 
         <form class="login" action="index.php?action=login" method="post" >
 

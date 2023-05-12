@@ -16,18 +16,16 @@ ob_start();
 // Define the title of the page
 $title = "Application web pour la gestion des repas en lien avec les commissions et le budget - Inscription";
 ?>
-<?php if (isset($registerErrorMessage)) : ?>
-    <div class="popup">
-        <h2>Erreur d'inscription</h2>
-        <div><?= $registerErrorMessage ?></div><br>
-        <input type="submit" value="OK" id="btnClose" class="btnClose">
-    </div>
-<?php endif; ?>
 
 <!-- Page content -->
 <main id="page" class="container">
     <h1>S'inscrire</h1>
 
+    <?php if (isset($registerErrorMessage)): ?>
+        <div class="error">
+            <?= $registerErrorMessage ?><br><br>
+        </div>
+    <?php endif; ?>
 
     <form class="login" action="index.php?action=register" method="post" >
 

@@ -84,7 +84,7 @@ if (isset($_GET['action'])) {
             break;
 
         case 'articlesAdd' :
-            articlesAdd($_POST);
+            articleAdd($_POST);
             break;
         case 'articlesList' :
             articlesList();
