@@ -187,3 +187,20 @@ function getArticleId($name, $quantity, $unity){
     $queryResult = executeQuerySelect($query);
     return $queryResult[0]['id'];
 }
+
+/**
+ * @brief This function is designed to delete an article an all its prices
+ */
+function deleteArticle($articleId){
+    $articleId = intval($articleId); // Conversion en int
+
+    $strSeparator = "'";
+
+    // Supprime les prix de l'article
+    $query = "DELETE FROM signs_has_articles WHERE signs_has_articles.articles_id = " . $strSeparator . $articleId . $strSeparator;
+    $queryResult = executeQueryDelete($query);
+
+    // Supprime l'article
+    $query = "DELETE FROM articles WHERE articles.id = " . $strSeparator . $articleId . $strSeparator;
+    $queryResult = executeQueryDelete($query);
+}

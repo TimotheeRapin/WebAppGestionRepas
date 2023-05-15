@@ -104,6 +104,10 @@ function signsAdd($signName)
     return $result;
 }
 
+/**
+ * @brief This function is designed to delete a sign in the database
+ * @param $signId
+ */
 function deleteSign($signId){
     $signId = intval($signId); // Conversion en int
 

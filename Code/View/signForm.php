@@ -14,7 +14,7 @@
 ob_start();
 
 // Define the title of the page
-$title = "Application web pour la gestion des repas en lien avec les commissions et le budget - Inscription";
+$title = "Application web pour la gestion des repas en lien avec les commissions et le budget - Création d'une enseigne";
 ?>
 
     <!-- Page content -->

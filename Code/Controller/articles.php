@@ -32,3 +32,13 @@ function articlesList()
 function articleAdd($data){
     articleManage($data);
 }
+
+/**
+ * @brief This function is designed to delete a article from the database
+ * @param $data
+ * @return void
+ */
+function articleDelete($data){
+    deleteArticle($data['id']);
+    articlesList();
+}

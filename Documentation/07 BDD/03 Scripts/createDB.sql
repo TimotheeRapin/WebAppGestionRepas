@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `WebAppGestionRepas`.`foods` (
   `time` TIME NULL,
   `difficulty` TINYINT(2) NULL,
   `instruction` VARCHAR(1000) NOT NULL,
-  `type` VARCHAR(15) NOT NULL,
+  `type` ENUM('Starter', 'MainCourse', 'Dessert') NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `UniqueFood` (`name` ASC) VISIBLE)
 ENGINE = InnoDB;

@@ -27,14 +27,6 @@ function menusList()
 }
 
 /**
- * @brief This function is designed to display the recipes page
- */
-function foodList()
-{
-    require_once "View/foodList.php";
-}
-
-/**
  * @brief This function is designed to display the shopping list page
  */
 function shoppingList()

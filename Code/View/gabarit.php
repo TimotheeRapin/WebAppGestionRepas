@@ -40,11 +40,11 @@
                         <li><a href="index.php?action=home">Accueil</a></li>
                         <?php if (isset($_SESSION['userType']) && $_SESSION['userType'] == 'User') : ?>
                             <li><a href="index.php?action=menusList">Liste des menus</a></li>
-                            <li><a href="index.php?action=foodList">Liste des Recettes</a></li>
+                            <li><a href="index.php?action=foodsList">Liste des Recettes</a></li>
                             <li><a href="index.php?action=shoppingList">Liste des commissions</a></li>
                         <?php elseif (isset($_SESSION['userType']) && $_SESSION['userType'] == 'Administrator') : ?>
                             <li><a href="index.php?action=usersList">Liste des utilisateurs</a></li>
-                            <li><a href="index.php?action=foodList">Liste des Recettes</a></li>
+                            <li><a href="index.php?action=foodsList">Liste des Recettes</a></li>
                             <li><a href="index.php?action=signsList">Liste des enseignes</a></li>
                             <li><a href="index.php?action=articlesList">Liste des articles</a></li>
                         <?php endif; ?>
