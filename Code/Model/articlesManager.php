@@ -21,7 +21,7 @@ function getArticlesList()
                                     Sources : https://www.w3schools.com/mysql/mysql_join_cross.asp*/
                 LEFT JOIN signs_has_articles ON articles.id = signs_has_articles.articles_id 
                 AND signs.id = signs_has_articles.signs_id
-                ORDER BY articles.name ASC;";
+                ORDER BY articles.name ASC, signs.name ASC;";
     $queryResult = executeQuerySelect($query);
 
 
@@ -88,11 +88,26 @@ function articleManage($data){
                             // Si l'unité est valide
                             if ($data['inputArticleUnity'] == "g" || $data['inputArticleUnity'] == "kg" || $data['inputArticleUnity'] == "ml" || $data['inputArticleUnity'] == "cl" || $data['inputArticleUnity'] == "l" || $data['inputArticleUnity'] == "pce") {
 
+                                // Récupère l'id de chaque enseigne avec le prix correspondant
+                                $articlesPrices = array();
+                                foreach ($data as $entry => $value) {
+                                    // Supprimer la partie "inputArticlePriceSign" du nom de la variable pour ne récupérer que l'id de l'enseigne (=== 0 permet de tester si la chaîne commence bien par "inputArticlePriceSign")
+                                    if (strpos($entry, 'inputArticlePriceSign') === 0) {
+                                        $signId = str_replace('inputArticlePriceSign', '', $entry);
+                                        // Convertit l'id de l'enseigne en numérique
+                                        $signId = intval($signId);
+                                        $articlesPrices[$signId] = $value;
+                                    }
+                                }
+
+
+
                                 // Si l'article à bien été créé dans la BDD
-                                if (createArticle($data['inputArticleName'], $data['inputArticleQuantity'], $data['inputArticleDescription'], $data['inputArticleUnity'])) {
+                                if (createArticle($data['inputArticleName'], $data['inputArticleQuantity'], $data['inputArticleDescription'], $data['inputArticleUnity'], $articlesPrices)) {
                                     $articleErrorMessage = null;
                                     require "View/articlesList.php";
-                                } else {
+                                }
+                                else {
                                     $articleErrorMessage = "L'article n'a pas pu être créé !";
                                     require "View/articleForm.php";
                                 }
@@ -136,7 +151,7 @@ function articleManage($data){
  * @param $unity
  * @return bool
  */
-function createArticle($name, $quantity, $description, $unity){
+function createArticle($name, $quantity, $description, $unity, $articlesPrices){
     $result = false;
 
     $strSeparator = "'";
@@ -146,13 +161,29 @@ function createArticle($name, $quantity, $description, $unity){
 
     $queryResult = executeQueryInsert($articleAddQuery);
     if ($queryResult){
-        $result = $queryResult;
-
         $articleId = getArticleId($name, $quantity, $unity);
 
-        $articleAddPriceQuery = "INSERT INTO signs_has_articles (signs_id, articles_id, price)
-                                VALUES ('$articleSignId', '$articleId', '$articlePrice');";
+
+        foreach ($articlesPrices as $signId => $price) {
+            if (isset($price) && $price != "" && $price != null && $price != 0) {
+                $price = str_replace(',', '.', $price);
+                $price = number_format($price, 2, '.', '');
+                $articleAddPriceQuery = "INSERT INTO signs_has_articles (signs_id, articles_id, price)
+                                VALUES ($signId, $articleId, $price);";
+                $queryResult = executeQueryInsert($articleAddPriceQuery);
+            }
+        }
     }
 
     return $result;
+}
+
+function getArticleId($name, $quantity, $unity){
+    $strSeparator = "'";
+    $query = "SELECT articles.id FROM articles
+              WHERE articles.name = " . $strSeparator . $name . $strSeparator .
+            " AND articles.quantity = " . $strSeparator . $quantity . $strSeparator .
+            " AND articles.unity = " . $strSeparator . $unity . $strSeparator;
+    $queryResult = executeQuerySelect($query);
+    return $queryResult[0]['id'];
 }

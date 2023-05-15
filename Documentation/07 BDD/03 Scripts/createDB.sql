@@ -188,7 +188,7 @@ CREATE TABLE IF NOT EXISTS `WebAppGestionRepas`.`signs_has_articles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `signs_id` INT NOT NULL,
   `articles_id` INT NOT NULL,
-  `price` INT NOT NULL,
+  `price` DECIMAL(5,2) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_signs_has_articles_articles1_idx` (`articles_id` ASC) VISIBLE,
   INDEX `fk_signs_has_articles_signs1_idx` (`signs_id` ASC) VISIBLE,

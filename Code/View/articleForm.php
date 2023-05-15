@@ -56,7 +56,7 @@ $title = "Application web pour la gestion des repas en lien avec les commissions
         <span>Prix par enseigne</span>
         <?php foreach ($signs as $sign) : ?>
             <div>
-                <input type="number" name="inputArticlePriceSign<?= $sign['id'] ?>" placeholder="Prix chez <?= $sign['name'] ?>" value="<?php if( isset($_POST['inputArticlePriceSign'.$sign['id']])) {echo $_POST['inputArticlePriceSign'.$sign['id']];}?>"/>
+                <input type="text" name="inputArticlePriceSign<?= $sign['id'] ?>" placeholder="Prix chez <?= $sign['name'] ?>" value="<?php if( isset($_POST['inputArticlePriceSign'.$sign['id']])) {echo $_POST['inputArticlePriceSign'.$sign['id']];}?>"/>
             </div>
         <?php endforeach; ?>
 

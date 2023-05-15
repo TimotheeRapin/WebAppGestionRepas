@@ -55,7 +55,7 @@ function login($loginRequest)
                 require "View/home.php";
             }
             else { //if the user/psw does not match, login form appears again with an error message
-                $loginErrorMessage = "Le type d'utilisateur, l'adresse email et/ou le mot de passe ne correspondent pas !";
+                $loginErrorMessage = "l'adresse email et/ou le mot de passe ne correspondent pas !";
                 require "View/login.php";
             }
         } else { //the user does not yet fill the form
