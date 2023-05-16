@@ -30,7 +30,7 @@ $title = "Application web pour la gestion des repas en lien avec les commissions
         <form class="login" action="index.php?action=signsAdd" method="post" >
 
             <div data-validate = "un nom d'enseigne est obligatoire">
-                <input type="text" name="inputSignName" placeholder="Nom de l'enseigne" value="<?php if( isset($_POST['inputSignName'])) {echo $_POST['inputSignName'];}?>"/>
+                <input type="text" name="inputSignName" placeholder="Nom de l'enseigne" value="<?php if( isset($_POST['inputSignName'])) {echo $_POST['inputSignName'];}?>" autofocus/>
             </div>
 
             <div>

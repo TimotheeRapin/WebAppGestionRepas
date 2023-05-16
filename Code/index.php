@@ -20,6 +20,7 @@ require_once "Controller/users.php";
 require_once "Controller/signs.php";
 require_once "Controller/articles.php";
 require_once "Controller/foods.php";
+require_once "Controller/menus.php";
 
 if (isset($_GET['action'])) {
 
@@ -55,13 +56,13 @@ if (isset($_GET['action'])) {
             break;
 
         case 'menusAdd' :
-            menusAdd($_POST);
+            menuAdd($_POST);
             break;
         case 'menusList' :
             menusList();
             break;
         case 'menusDelete' :
-            menusDelete($_POST);
+            menuDelete($_POST);
             break;
 
         case 'foodsAdd' :
@@ -79,13 +80,13 @@ if (isset($_GET['action'])) {
             break;
 
         case 'ingredientsAdd' :
-            ingredientsAdd($_POST);
+            ingredientAdd($_POST);
             break;
         case 'ingredientsList' :
             ingredientsList();
             break;
         case 'ingredientsDelete' :
-            ingredientsDelete($_POST);
+            ingredientDelete($_POST);
             break;
 
         case 'articlesAdd' :

@@ -25,11 +25,6 @@ function foodsList()
     $Dishs = $foods[1];
     $Desserts = $foods[2];
 
-/*
-    $users = $userList[0];
-    $administrators = $userList[1];
-*/
-
     // Call the view 'foodsList' to display the foods list
     require_once "View/foodsList.php";
 }

@@ -30,7 +30,7 @@ $title = "Application web pour la gestion des repas en lien avec les commissions
     <form class="login" action="index.php?action=register" method="post" >
 
         <div data-validate = "un prénom est obligatoire">
-            <input type="text" name="inputUserFirstName" placeholder="Prénom" value="<?php if( isset($_POST['inputUserFirstName'])) {echo $_POST['inputUserFirstName'];}?>"/>
+            <input type="text" name="inputUserFirstName" placeholder="Prénom" value="<?php if( isset($_POST['inputUserFirstName'])) {echo $_POST['inputUserFirstName'];}?>" autofocus/>
         </div>
 
         <div data-validate = "un nom est obligatoire">

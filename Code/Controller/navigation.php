@@ -19,14 +19,6 @@ function home()
 }
 
 /**
- * @brief This function is designed to display the menus page
- */
-function menusList()
-{
-    require_once "View/menusList.php";
-}
-
-/**
  * @brief This function is designed to display the shopping list page
  */
 function shoppingList()

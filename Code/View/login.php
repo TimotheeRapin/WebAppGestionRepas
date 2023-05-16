@@ -28,7 +28,7 @@ $title = 'Application web pour la gestion des repas en lien avec les commissions
         <form class="login" action="index.php?action=login" method="post" >
 
             <div data-validate = "une adresse E-mail est obligatoire: ex@abc.xyz">
-                <input type="text" name="inputUserEmailAddress" placeholder="Adresse email" value="<?php if( isset($_POST['inputUserEmailAddress'])) {echo $_POST['inputUserEmailAddress'];}?>"/>
+                <input type="text" name="inputUserEmailAddress" placeholder="Adresse email" value="<?php if( isset($_POST['inputUserEmailAddress'])) {echo $_POST['inputUserEmailAddress'];}?>" autofocus/>
             </div>
 
             <div data-validate = "un mot de passe est obligatoire">
