@@ -77,6 +77,13 @@ h2{
     color: var(--text-light);
 }
 
+h3{
+    text-align: center;
+    font-size: 2rem;
+    margin: 2rem;
+    color: var(--text-light);
+}
+
 a{
     color: var(--primary);
     /*text-decoration: underline;*/
@@ -286,6 +293,7 @@ button:hover{
 
 .center{
     display: block;
+    text-align: center;
     margin: 20px auto;
 }
 

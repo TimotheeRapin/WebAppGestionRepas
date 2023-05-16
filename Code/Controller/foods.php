@@ -42,3 +42,12 @@ function foodAdd($data)
     foodsManage($data);
     require_once 'Model/foodsManager.php';
 }
+
+/**
+ * @brief This function is designed to display details of a food
+ */
+function foodDetails($data)
+{
+    $food = getFoodDetails($data['id']);
+    require_once 'View/foodDetails.php';
+}

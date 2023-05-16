@@ -31,6 +31,9 @@ $title = 'Application web pour la gestion des repas en lien avec les commissions
             <th>Temps</th>
             -->
             <th>Difficulté</th>
+
+            <th>Affichage des détails</th>
+
             <?php if (isset($_SESSION['userType']) && $_SESSION['userType'] == 'Administrator') : ?>
                 <!--
                 <th>Modifier</th>
@@ -40,29 +43,43 @@ $title = 'Application web pour la gestion des repas en lien avec les commissions
             <?php endif; ?>
         </tr>
         </thead>
+        <tbody>
         <?php foreach ($Starters as $food): ?>
-            <tr>
-                <td><?=$food['name']; ?></td>
-                <!--
-                <td><?=$food['time']; ?></td>
-                -->
-                <td><?=$food['difficulty'] . " sur 3"; ?></td>
-                <?php if (isset($_SESSION['userType']) && $_SESSION['userType'] == 'Administrator') : ?>
+            <a href="index.php?action=foodDetails&id=<?=$food['id']; ?>">
+                <tr>
+                    <td><?=$food['name']; ?></td>
                     <!--
+                    <td><?=$food['time']; ?></td>
+                    -->
+                    <td><?=$food['difficulty'] . " sur 3"; ?></td>
+
+                    <td>
+                        <a href="index.php?action=foodDetails&id=<?=$food['id']; ?>">
+                            <button>Détails</button>
+                        </a>
+                    </td>
+
+                    <?php if (isset($_SESSION['userType']) && $_SESSION['userType'] == 'Administrator') : ?>
+                        <!--
                     <td>
                         <a href="index.php?action=articlesUpdate&id=<?=$food['id']; ?>">
                             <button>Modifier</button>
                         </a>
                     </td>
-                    --><!--
+                    -->
+                        <!--
                     <td>
                         <a href="index.php?action=articlesDelete&id=<?=$food['id']; ?>">
                             <button>Supprimer</button>
                         </a>
-                    </td>-->
-                <?php endif; ?>
-            </tr>
+                    </td>
+                    -->
+                    <?php endif; ?>
+                </tr>
+            </a>
         <?php endforeach; ?>
+        </tbody>
+
     </table>
 
     <h2>Plats</h2>
@@ -74,6 +91,9 @@ $title = 'Application web pour la gestion des repas en lien avec les commissions
             <th>Temps</th>
             -->
             <th>Difficulté</th>
+
+            <th>Affichage des détails</th>
+
             <?php if (isset($_SESSION['userType']) && $_SESSION['userType'] == 'Administrator') : ?>
                 <!--
                 <th>Modifier</th>
@@ -83,29 +103,38 @@ $title = 'Application web pour la gestion des repas en lien avec les commissions
             <?php endif; ?>
         </tr>
         </thead>
-        <?php foreach ($Dishs as $food): ?>
-            <tr>
-                <td><?=$food['name']; ?></td>
-                <!--
-                <td><?=$food['time']; ?></td>
-                -->
-                <td><?=$food['difficulty'] . " sur 3"; ?></td>
-                <?php if (isset($_SESSION['userType']) && $_SESSION['userType'] == 'Administrator') : ?>
+        <tbody>
+            <?php foreach ($Dishs as $food): ?>
+                <tr>
+                    <td><?=$food['name']; ?></td>
                     <!--
+                    <td><?=$food['time']; ?></td>
+                    -->
+                    <td><?=$food['difficulty'] . " sur 3"; ?></td>
+
                     <td>
-                        <a href="index.php?action=articlesUpdate&id=<?=$food['id']; ?>">
-                            <button>Modifier</button>
+                        <a href="index.php?action=foodDetails&id=<?=$food['id']; ?>">
+                            <button>Détails</button>
                         </a>
                     </td>
-                    --><!--
-                    <td>
-                        <a href="index.php?action=articlesDelete&id=<?=$food['id']; ?>">
-                            <button>Supprimer</button>
-                        </a>
-                    </td>-->
-                <?php endif; ?>
-            </tr>
-        <?php endforeach; ?>
+
+                    <?php if (isset($_SESSION['userType']) && $_SESSION['userType'] == 'Administrator') : ?>
+                        <!--
+                        <td>
+                            <a href="index.php?action=articlesUpdate&id=<?=$food['id']; ?>">
+                                <button>Modifier</button>
+                            </a>
+                        </td>
+                        --><!--
+                        <td>
+                            <a href="index.php?action=articlesDelete&id=<?=$food['id']; ?>">
+                                <button>Supprimer</button>
+                            </a>
+                        </td>-->
+                    <?php endif; ?>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
     </table>
 
     <h2>Desserts</h2>
@@ -117,6 +146,9 @@ $title = 'Application web pour la gestion des repas en lien avec les commissions
             <th>Temps</th>
             -->
             <th>Difficulté</th>
+
+            <th>Affichage des détails</th>
+
             <?php if (isset($_SESSION['userType']) && $_SESSION['userType'] == 'Administrator') : ?>
                 <!--
                 <th>Modifier</th>
@@ -126,29 +158,38 @@ $title = 'Application web pour la gestion des repas en lien avec les commissions
             <?php endif; ?>
         </tr>
         </thead>
-        <?php foreach ($Desserts as $food): ?>
-            <tr>
-                <td><?=$food['name']; ?></td>
-                <!--
-                <td><?=$food['time']; ?></td>
-                -->
-                <td><?=$food['difficulty'] . " sur 3"; ?></td>
-                <?php if (isset($_SESSION['userType']) && $_SESSION['userType'] == 'Administrator') : ?>
+        <tbody>
+            <?php foreach ($Desserts as $food): ?>
+                <tr>
+                    <td><?=$food['name']; ?></td>
                     <!--
+                    <td><?=$food['time']; ?></td>
+                    -->
+                    <td><?=$food['difficulty'] . " sur 3"; ?></td>
+
                     <td>
-                        <a href="index.php?action=articlesUpdate&id=<?=$food['id']; ?>">
-                            <button>Modifier</button>
+                        <a href="index.php?action=foodDetails&id=<?=$food['id']; ?>">
+                            <button>Détails</button>
                         </a>
                     </td>
-                    --><!--
-                    <td>
-                        <a href="index.php?action=articlesDelete&id=<?=$food['id']; ?>">
-                            <button>Supprimer</button>
-                        </a>
-                    </td>-->
-                <?php endif; ?>
-            </tr>
-        <?php endforeach; ?>
+
+                    <?php if (isset($_SESSION['userType']) && $_SESSION['userType'] == 'Administrator') : ?>
+                        <!--
+                        <td>
+                            <a href="index.php?action=articlesUpdate&id=<?=$food['id']; ?>">
+                                <button>Modifier</button>
+                            </a>
+                        </td>
+                        --><!--
+                        <td>
+                            <a href="index.php?action=articlesDelete&id=<?=$food['id']; ?>">
+                                <button>Supprimer</button>
+                            </a>
+                        </td>-->
+                    <?php endif; ?>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
     </table>
 
     <?php if (isset($_SESSION['userType']) && $_SESSION['userType'] == 'Administrator') : ?>

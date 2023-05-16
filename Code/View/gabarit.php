@@ -5,9 +5,9 @@
  * @brief                   This file is designed to manage the navigation of the site
  * @author                  Created by Timothée RAPIN
  * Creation date            05.05.2021
- * update                   05.05.2021
- * @version                 0.1
- * @note                    Creation of this file
+ * update                   16.05.2021
+ * @version                 1.0
+ * @note                    Masquer la possibilité de modifier le profil
  */
 ?>
 
@@ -51,7 +51,9 @@
 
                         <?php if (isset($_SESSION['userEmailAddress'])) : ?>
                         <ul>
+                            <!--
                             <li><a href="index.php?action=userMange">Mon compte</a></li>
+                            -->
                             <li><a href="index.php?action=logout">Déconnexion</a></li>
                         </ul>
                         <?php else: ?>

@@ -125,7 +125,10 @@ function foodsManage($data){
         }
     }
     catch (Exception $foodErrorMessage) {
-        $foodErrorMessage = "Nous rencontrons actuellement un problème technique. Il est temporairement impossible de modifier un plat. Désolé pour le dérangement !";
+        $foodErrorMessage = "Nous rencontrons actuellement un problème technique.<br>
+                                Il est temporairement impossible de modifier ou créer un plat.<br>
+                                Il est possible qu'un charactère pose problème, tel que : '<br>
+                                Désolé pour le dérangement !";
         require "View/foodForm.php";
     }
 }
@@ -152,4 +155,26 @@ function foodsAdd($data){
     catch (Exception $foodErrorMessage) {
         throw new Exception("Erreur lors de l'ajout du plat dans la base de données");
     }
+}
+
+/**
+ * @brief This function is designed to display details of a food
+ * @param $data contains the data to delete
+ */
+function getFoodDetails($id){
+
+    $strSeparator = "'";
+
+    /*
+    $query = "SELECT foods.id, foods.name, foods.nbPersons, foods.time, foods.difficulty, foods.instruction, foods.type FROM foods
+              WHERE foods.id = " . $strSeparator . $id . $strSeparator;
+    */
+
+    $query = "SELECT foods.id, foods.name, foods.nbPersons, foods.difficulty, foods.instruction, foods.type FROM foods
+              WHERE foods.id = " . $strSeparator . $id . $strSeparator;
+
+    $queryResult = executeQuerySelect($query);
+    $food = $queryResult[0];
+
+    return $food;
 }

@@ -74,6 +74,10 @@ if (isset($_GET['action'])) {
             foodDelete($_POST);
             break;
 
+        case 'foodDetails' :
+            foodDetails($_GET);
+            break;
+
         case 'ingredientsAdd' :
             ingredientsAdd($_POST);
             break;
