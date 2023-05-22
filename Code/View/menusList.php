@@ -27,36 +27,26 @@ $title = 'Application web pour la gestion des repas en lien avec les commissions
     <?php foreach ($menus as $menu): ?>
         <h2><?=$menu['title']; ?></h2>
         <table>
+            <thead>
+            <tr>
+                <th>Plat</th>
+                <th>Nombre de personnes</th>
+            </tr>
             <tbody>
-                <?php foreach ($menu['foods'] as $food): ?>
-                    <?php if(isset($food['id'])): ?>
-                        <tr>
-                            <td>
-                                <a href="index.php?action=foodDetails&id=<?=$food['id']; ?>">
-                                    <?=$food['name']; ?>
-                                </a>
-                            </td>
-                            <td>
-                                <?=$food['nbPersons']; ?>
-                            </td>
-                        </tr>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-
-        <!--
+            <?php foreach ($menu['foods'] as $food): ?>
                 <tr>
-                    <td><?=$food['name']; ?></td>
-                    <td><?=$food['difficulty'] . " sur 3"; ?></td>
-
                     <td>
-                        <a href="index.php?action=foodDetails&id=<?=$food['id']; ?>">
-                            <button>Détails</button>
+                        <a href="index.php?action=foodDetails&id=<?=$food['foodId']; ?>">
+                            <?=$food['name']; ?>
                         </a>
                     </td>
-                </tr>-->
-
+                    <td>
+                        <?=$food['nbPersons']; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
     <?php endforeach; ?>
 
     <a href="index.php?action=menusAdd">

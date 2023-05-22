@@ -12,19 +12,21 @@
 
 // Include the database connection file
 require_once "dbConnector.php";
+require_once "foodsManager.php";
 
 function getMenusList () {
 
-    $query = "SELECT menus.id, menus.title, menus.menuNumber, foods.id AS foodId, foods.name, foods.nbPersons, foods.difficulty, foods.instruction, foods.type
+    $query = "SELECT menus.id, menus.title, menus.menuNumber, menus_has_foods.nbPersons, foods.id AS foodId, foods.name, foods.difficulty, foods.instruction, foods.type
                 FROM menus
                 LEFT JOIN menus_has_foods ON menus_has_foods.menus_id = menus.id
                 LEFT JOIN foods ON foods.id = menus_has_foods.foods_id
                 ORDER BY menus.title ASC, foods.type ASC, foods.name ASC;";
 
+
     $queryResult = executeQuerySelect($query);
 
     $menus = array();
-    foreach ($queryResult as $row){
+    foreach ($queryResult as $row) {
         $menuId = $row['id'];
         // Permet de rassembler les menus qui ont le même id dans une même ligne
         if (!isset($menus[$menuId])) {
@@ -35,8 +37,16 @@ function getMenusList () {
                 'foods' => array()  // Tableau vide pour stocker les recettes
             );
         }
-        // Ajoutez la recette pour chaques menus
-        $menus[$menuId]['foods'][] = $row['foodId'];
+        // Ajouter les informations de la recette pour chaque menu
+        $menuFood = array(
+            'foodId' => $row['foodId'],
+            'name' => $row['name'],
+            'nbPersons' => $row['nbPersons'],
+            'difficulty' => $row['difficulty'],
+            'instruction' => $row['instruction'],
+            'type' => $row['type']
+        );
+        $menus[$menuId]['foods'][] = $menuFood;
     }
 
     $result = $menus;
@@ -44,6 +54,7 @@ function getMenusList () {
 }
 
 function menuManage($data){
+    $foods = getFoodsList();
     $menus = getMenusList();
     try {
 
@@ -108,4 +119,16 @@ function menuManage($data){
         $menuErrorMessage = "Nous rencontrons actuellement un problème technique. Il est temporairement impossible de gérer les articles. Désolé du dérangement !";
         require "View/menuForm.php";
     }
+}
+
+function createMenu($data) {
+    $strSeparator = "'";
+    $query = "INSERT INTO menus (title, menuNumber, accounts_id) VALUES (" . $strSeparator . $data['inputMenuTitle'] . $strSeparator . ", " . $strSeparator . $data['inputMenuNumber'] . $strSeparator . ", " . $_SESSION['id'] . ");";
+    $queryResult = executeQueryInsert($query);
+    $query = "SELECT menus.id FROM menus WHERE menus.menuNumber = " . $strSeparator . $data['inputMenuNumber'] . $strSeparator . ";";
+    $menuId = executeQuerySelect($query)[0]['id'];
+    $foods = $data['inputMenuFood'];
+    $query = "INSERT INTO menus_has_foods (menus_id, foods_id, nbPersons) VALUES (" . $menuId . ", " . $foods . ", " . $data['inputMenuNbPersons'] . ");";
+    $queryResult = executeQueryInsert($query);
+    return $queryResult;
 }

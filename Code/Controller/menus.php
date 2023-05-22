@@ -28,6 +28,5 @@ function menusList()
 
 function menuAdd($data)
 {
-    $foods = getFoodsList();
     menuManage($data);
 }

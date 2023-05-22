@@ -5,19 +5,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema WebAppGestionRepas
+-- Schema gesrep_trn_TPI
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema WebAppGestionRepas
+-- Schema gesrep_trn_TPI
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `WebAppGestionRepas` DEFAULT CHARACTER SET utf8 ;
-USE `WebAppGestionRepas` ;
+CREATE SCHEMA IF NOT EXISTS `gesrep_trn_TPI` DEFAULT CHARACTER SET utf8 ;
+USE `gesrep_trn_TPI` ;
 
 -- -----------------------------------------------------
--- Table `WebAppGestionRepas`.`accounts`
+-- Table `gesrep_trn_TPI`.`accounts`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `WebAppGestionRepas`.`accounts` (
+CREATE TABLE IF NOT EXISTS `gesrep_trn_TPI`.`accounts` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `firstName` VARCHAR(50) NOT NULL,
   `lastName` VARCHAR(50) NOT NULL,
@@ -30,9 +30,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `WebAppGestionRepas`.`signs`
+-- Table `gesrep_trn_TPI`.`signs`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `WebAppGestionRepas`.`signs` (
+CREATE TABLE IF NOT EXISTS `gesrep_trn_TPI`.`signs` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(30) NOT NULL,
   PRIMARY KEY (`id`),
@@ -41,9 +41,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `WebAppGestionRepas`.`menus`
+-- Table `gesrep_trn_TPI`.`menus`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `WebAppGestionRepas`.`menus` (
+CREATE TABLE IF NOT EXISTS `gesrep_trn_TPI`.`menus` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(30) NOT NULL,
   `menuNumber` VARCHAR(25) NOT NULL,
@@ -53,16 +53,16 @@ CREATE TABLE IF NOT EXISTS `WebAppGestionRepas`.`menus` (
   INDEX `UniqueMenu` (`menuNumber` ASC) VISIBLE,
   CONSTRAINT `fk_menus_users`
     FOREIGN KEY (`accounts_id`)
-    REFERENCES `WebAppGestionRepas`.`accounts` (`id`)
+    REFERENCES `gesrep_trn_TPI`.`accounts` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `WebAppGestionRepas`.`articles`
+-- Table `gesrep_trn_TPI`.`articles`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `WebAppGestionRepas`.`articles` (
+CREATE TABLE IF NOT EXISTS `gesrep_trn_TPI`.`articles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(30) NOT NULL,
   `quantity` INT NOT NULL,
@@ -74,9 +74,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `WebAppGestionRepas`.`shopping lists`
+-- Table `gesrep_trn_TPI`.`shopping lists`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `WebAppGestionRepas`.`shopping lists` (
+CREATE TABLE IF NOT EXISTS `gesrep_trn_TPI`.`shopping lists` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(30) NOT NULL,
   PRIMARY KEY (`id`),
@@ -85,25 +85,25 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `WebAppGestionRepas`.`foods`
+-- Table `gesrep_trn_TPI`.`foods`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `WebAppGestionRepas`.`foods` (
+CREATE TABLE IF NOT EXISTS `gesrep_trn_TPI`.`foods` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(40) NOT NULL,
   `nbPersons` INT NOT NULL,
   `time` TIME NULL,
   `difficulty` TINYINT(2) NULL,
   `instruction` VARCHAR(1000) NOT NULL,
-  `type` ENUM('Starter', 'MainCourse', 'Dessert') NOT NULL,
+  `type` ENUM('Starter', 'Dish', 'Dessert') NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `UniqueFood` (`name` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `WebAppGestionRepas`.`ingredients`
+-- Table `gesrep_trn_TPI`.`ingredients`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `WebAppGestionRepas`.`ingredients` (
+CREATE TABLE IF NOT EXISTS `gesrep_trn_TPI`.`ingredients` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(30) NOT NULL,
   PRIMARY KEY (`id`),
@@ -112,10 +112,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `WebAppGestionRepas`.`menus_has_foods`
+-- Table `gesrep_trn_TPI`.`menus_has_foods`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `WebAppGestionRepas`.`menus_has_foods` (
+CREATE TABLE IF NOT EXISTS `gesrep_trn_TPI`.`menus_has_foods` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `nbPersons` INT NOT NULL,
   `menus_id` INT NOT NULL,
   `foods_id` INT NOT NULL,
   PRIMARY KEY (`id`),
@@ -123,21 +124,21 @@ CREATE TABLE IF NOT EXISTS `WebAppGestionRepas`.`menus_has_foods` (
   INDEX `fk_menus_has_foods_menus1_idx` (`menus_id` ASC) VISIBLE,
   CONSTRAINT `fk_menus_has_foods_menus1`
     FOREIGN KEY (`menus_id`)
-    REFERENCES `WebAppGestionRepas`.`menus` (`id`)
+    REFERENCES `gesrep_trn_TPI`.`menus` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_menus_has_foods_foods1`
     FOREIGN KEY (`foods_id`)
-    REFERENCES `WebAppGestionRepas`.`foods` (`id`)
+    REFERENCES `gesrep_trn_TPI`.`foods` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `WebAppGestionRepas`.`foods_has_ingredients`
+-- Table `gesrep_trn_TPI`.`foods_has_ingredients`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `WebAppGestionRepas`.`foods_has_ingredients` (
+CREATE TABLE IF NOT EXISTS `gesrep_trn_TPI`.`foods_has_ingredients` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `foods_id` INT NOT NULL,
   `ingredients_id` INT NOT NULL,
@@ -147,21 +148,21 @@ CREATE TABLE IF NOT EXISTS `WebAppGestionRepas`.`foods_has_ingredients` (
   INDEX `fk_foods_has_ingredients_foods1_idx` (`foods_id` ASC) VISIBLE,
   CONSTRAINT `fk_foods_has_ingredients_foods1`
     FOREIGN KEY (`foods_id`)
-    REFERENCES `WebAppGestionRepas`.`foods` (`id`)
+    REFERENCES `gesrep_trn_TPI`.`foods` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_foods_has_ingredients_ingredients1`
     FOREIGN KEY (`ingredients_id`)
-    REFERENCES `WebAppGestionRepas`.`ingredients` (`id`)
+    REFERENCES `gesrep_trn_TPI`.`ingredients` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `WebAppGestionRepas`.`articles_has_shopping lists`
+-- Table `gesrep_trn_TPI`.`articles_has_shopping lists`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `WebAppGestionRepas`.`articles_has_shopping lists` (
+CREATE TABLE IF NOT EXISTS `gesrep_trn_TPI`.`articles_has_shopping lists` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `articles_id` INT NOT NULL,
   `shopping lists_id` INT NOT NULL,
@@ -170,21 +171,21 @@ CREATE TABLE IF NOT EXISTS `WebAppGestionRepas`.`articles_has_shopping lists` (
   INDEX `fk_articles_has_shopping lists_articles1_idx` (`articles_id` ASC) VISIBLE,
   CONSTRAINT `fk_articles_has_shopping lists_articles1`
     FOREIGN KEY (`articles_id`)
-    REFERENCES `WebAppGestionRepas`.`articles` (`id`)
+    REFERENCES `gesrep_trn_TPI`.`articles` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_articles_has_shopping lists_shopping lists1`
     FOREIGN KEY (`shopping lists_id`)
-    REFERENCES `WebAppGestionRepas`.`shopping lists` (`id`)
+    REFERENCES `gesrep_trn_TPI`.`shopping lists` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `WebAppGestionRepas`.`signs_has_articles`
+-- Table `gesrep_trn_TPI`.`signs_has_articles`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `WebAppGestionRepas`.`signs_has_articles` (
+CREATE TABLE IF NOT EXISTS `gesrep_trn_TPI`.`signs_has_articles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `signs_id` INT NOT NULL,
   `articles_id` INT NOT NULL,
@@ -194,21 +195,21 @@ CREATE TABLE IF NOT EXISTS `WebAppGestionRepas`.`signs_has_articles` (
   INDEX `fk_signs_has_articles_signs1_idx` (`signs_id` ASC) VISIBLE,
   CONSTRAINT `fk_signs_has_articles_signs1`
     FOREIGN KEY (`signs_id`)
-    REFERENCES `WebAppGestionRepas`.`signs` (`id`)
+    REFERENCES `gesrep_trn_TPI`.`signs` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_signs_has_articles_articles1`
     FOREIGN KEY (`articles_id`)
-    REFERENCES `WebAppGestionRepas`.`articles` (`id`)
+    REFERENCES `gesrep_trn_TPI`.`articles` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `WebAppGestionRepas`.`ingredients_has_articles`
+-- Table `gesrep_trn_TPI`.`ingredients_has_articles`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `WebAppGestionRepas`.`ingredients_has_articles` (
+CREATE TABLE IF NOT EXISTS `gesrep_trn_TPI`.`ingredients_has_articles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `ingredients_id` INT NOT NULL,
   `articles_id` INT NOT NULL,
@@ -217,12 +218,12 @@ CREATE TABLE IF NOT EXISTS `WebAppGestionRepas`.`ingredients_has_articles` (
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_ingredients_has_articles_ingredients1`
     FOREIGN KEY (`ingredients_id`)
-    REFERENCES `WebAppGestionRepas`.`ingredients` (`id`)
+    REFERENCES `gesrep_trn_TPI`.`ingredients` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_ingredients_has_articles_articles1`
     FOREIGN KEY (`articles_id`)
-    REFERENCES `WebAppGestionRepas`.`articles` (`id`)
+    REFERENCES `gesrep_trn_TPI`.`articles` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

@@ -102,8 +102,8 @@ function openDBConnexion()
     $hostname = 'localhost';
     $port = 3306;
     $charset = 'utf8';
-    $dbName = 'webappgestionrepas';
-    $userName = 'webappgestionrepas';
+    $dbName = 'gesrep_trn_TPI';
+    $userName = 'gesrep_trn_TPI';
     $userPsw = '6@aP7qkR8^hn';
     $dsn = $sqlDriver . ':host=' . $hostname . ';dbname=' . $dbName . ';port=' . $port . ';charset=' . $charset;
 

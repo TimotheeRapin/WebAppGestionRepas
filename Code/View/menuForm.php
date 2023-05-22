@@ -34,7 +34,9 @@ $title = "Application web pour la gestion des repas en lien avec les commissions
         <select name="inputMenuFood" id="inputMenuFood" <?php if( isset($_POST['inputFood'])) {echo $_POST['inputFood'];}?>>
             <option value="0">Choisir un plat</option>
             <?php foreach ($foods as $food): ?>
-                <option value="<?=$food['id']; ?>"><?=$food['name']; ?></option>
+                <?php foreach ($food as $receipt): ?>
+                    <option value="<?=$receipt['id']; ?>"><?=$receipt['name']; ?></option>
+                <?php endforeach; ?>
             <?php endforeach; ?>
         </select><br>
 

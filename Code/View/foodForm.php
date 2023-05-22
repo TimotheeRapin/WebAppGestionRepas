@@ -33,14 +33,15 @@ $title = "Application web pour la gestion des repas en lien avec les commissions
                 <input type="text" name="inputFoodName" placeholder="Nom de du repas" value="<?php if( isset($_POST['inputFoodName'])) {echo $_POST['inputFoodName'];}?>" autofocus/>
             </div>
 
-            <div data-validate ="un nombre de personnes est obligatoire">
-                <input type="number" name="inputFoodNbPersons" placeholder="Nombre de personnes" value="<?php if( isset($_POST['inputFoodNbPersons'])) {echo $_POST['inputFoodNbPersons'];}?>"/>
+            <div data-validate="un nombre de personnes est obligatoire" style="display: none;">
+                <input type="number" name="inputFoodNbPersons" placeholder="Nombre de personnes" value="1" required/>
             </div>
-<!--
-            <div>
-                <input type="time" name="inputFoodTime" placeholder="Durée de préparation" value="<?php if( isset($_POST['inputFoodTime'])) {echo $_POST['inputFoodTime'];}?>"/>
-            </div>
--->
+
+            <!--
+                        <div>
+                            <input type="time" name="inputFoodTime" placeholder="Durée de préparation" value="<?php if( isset($_POST['inputFoodTime'])) {echo $_POST['inputFoodTime'];}?>"/>
+                        </div>
+            -->
             <div>
                 <label for="inputFoodDifficulty">Difficulté</label>
                 <input type="range" min="1" max="3" step="1" value="2" name="inputFoodDifficulty" value="<?php if( isset($_POST['inputFoodDifficulty'])) {echo $_POST['inputFoodDifficulty'];}?>"/>
