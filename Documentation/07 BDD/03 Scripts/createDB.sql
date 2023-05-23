@@ -94,20 +94,9 @@ CREATE TABLE IF NOT EXISTS `gesrep_trn_TPI`.`foods` (
   `time` TIME NULL,
   `difficulty` TINYINT(2) NULL,
   `instruction` VARCHAR(1000) NOT NULL,
-  `type` ENUM('Starter', 'Dish', 'Dessert') NOT NULL,
+  `type` VARCHAR(15) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `UniqueFood` (`name` ASC) VISIBLE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `gesrep_trn_TPI`.`ingredients`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gesrep_trn_TPI`.`ingredients` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(30) NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `UniqueIngredient` (`name` ASC) VISIBLE)
 ENGINE = InnoDB;
 
 
@@ -130,30 +119,6 @@ CREATE TABLE IF NOT EXISTS `gesrep_trn_TPI`.`menus_has_foods` (
   CONSTRAINT `fk_menus_has_foods_foods1`
     FOREIGN KEY (`foods_id`)
     REFERENCES `gesrep_trn_TPI`.`foods` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `gesrep_trn_TPI`.`foods_has_ingredients`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gesrep_trn_TPI`.`foods_has_ingredients` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `foods_id` INT NOT NULL,
-  `ingredients_id` INT NOT NULL,
-  `quantity` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_foods_has_ingredients_ingredients1_idx` (`ingredients_id` ASC) VISIBLE,
-  INDEX `fk_foods_has_ingredients_foods1_idx` (`foods_id` ASC) VISIBLE,
-  CONSTRAINT `fk_foods_has_ingredients_foods1`
-    FOREIGN KEY (`foods_id`)
-    REFERENCES `gesrep_trn_TPI`.`foods` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_foods_has_ingredients_ingredients1`
-    FOREIGN KEY (`ingredients_id`)
-    REFERENCES `gesrep_trn_TPI`.`ingredients` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -207,21 +172,22 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `gesrep_trn_TPI`.`ingredients_has_articles`
+-- Table `gesrep_trn_TPI`.`foods_has_articles`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `gesrep_trn_TPI`.`ingredients_has_articles` (
+CREATE TABLE IF NOT EXISTS `gesrep_trn_TPI`.`foods_has_articles` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `ingredients_id` INT NOT NULL,
+  `quantity` INT NOT NULL,
+  `foods_id` INT NOT NULL,
   `articles_id` INT NOT NULL,
-  INDEX `fk_ingredients_has_articles_articles1_idx` (`articles_id` ASC) VISIBLE,
-  INDEX `fk_ingredients_has_articles_ingredients1_idx` (`ingredients_id` ASC) VISIBLE,
+  INDEX `fk_foods_has_articles_articles1_idx` (`articles_id` ASC) VISIBLE,
+  INDEX `fk_foods_has_articles_foods1_idx` (`foods_id` ASC) VISIBLE,
   PRIMARY KEY (`id`),
-  CONSTRAINT `fk_ingredients_has_articles_ingredients1`
-    FOREIGN KEY (`ingredients_id`)
-    REFERENCES `gesrep_trn_TPI`.`ingredients` (`id`)
+  CONSTRAINT `fk_foods_has_articles_foods1`
+    FOREIGN KEY (`foods_id`)
+    REFERENCES `gesrep_trn_TPI`.`foods` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_ingredients_has_articles_articles1`
+  CONSTRAINT `fk_foods_has_articles_articles1`
     FOREIGN KEY (`articles_id`)
     REFERENCES `gesrep_trn_TPI`.`articles` (`id`)
     ON DELETE NO ACTION

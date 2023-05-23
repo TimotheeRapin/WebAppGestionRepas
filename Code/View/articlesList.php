@@ -1,6 +1,6 @@
 <?php
 /**
- * Project                  TPI - Application web de gestion de planning
+ * Project                  TPI - Application web pour la gestion des repas en lien avec les commissions et le budget
  * @file                    articlesList.php
  * @brief                   This file is designed to display the articles list
  * @author                  Created by Timothée RAPIN
