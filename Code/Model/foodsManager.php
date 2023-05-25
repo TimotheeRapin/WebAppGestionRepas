@@ -165,16 +165,46 @@ function getFoodDetails($id){
 
     $strSeparator = "'";
 
-    /*
-    $query = "SELECT foods.id, foods.name, foods.nbPersons, foods.time, foods.difficulty, foods.instruction, foods.type FROM foods
-              WHERE foods.id = " . $strSeparator . $id . $strSeparator;
-    */
-
-    $query = "SELECT foods.id, foods.name, foods.nbPersons, foods.difficulty, foods.instruction, foods.type FROM foods
-              WHERE foods.id = " . $strSeparator . $id . $strSeparator;
+    $query = "SELECT foods.id, foods.name, foods.nbPersons, foods.time, foods.difficulty, foods.instruction, foods.type, articles.id AS articlesId, articles.name AS articles, foods_has_articles.quantity, articles.unity
+                FROM foods
+                LEFT JOIN foods_has_articles ON foods.id = foods_has_articles.foods_id
+                LEFT JOIN articles ON foods_has_articles.articles_id = articles.id
+                WHERE foods.id = " . $strSeparator . $id . $strSeparator . ";";
 
     $queryResult = executeQuerySelect($query);
-    $food = $queryResult[0];
+
+    $articles = array();
+    foreach ($queryResult as $row) {
+        $articleId = $row['id'];
+        // Permet de rassembler les articles qui ont le même id dans une même ligne (id, nom et quantité)
+        if (!isset($articles[$articleId])) {
+            $articles[$articleId] = array(
+                'id' => $row['id'],
+                'name' => $row['name'],
+                'nbPersons' => $row['nbPersons'],
+                //'time' => $row['time'],
+                'difficulty' => $row['difficulty'],
+                'instruction' => $row['instruction'],
+                'type' => $row['type'],
+
+                'articles' => array()  // Tableau vide pour stocker les articles
+            );
+        }
+
+        // Ajoutez le nom et la quantité de chaques articles avec l'id
+        $articles[$articleId]['articles'][$row['articlesId']] = array(
+            'articles' => $row['articles'],
+            'quantity' => $row['quantity'],
+            'unity' => $row['unity']
+        );
+/*
+        $articles[$articleId]['articleId'][] = $row['articlesId'];
+
+        $articles[$articleId]['articleName'][] = $row['articles'];
+        $articles[$articleId]['articleQuantity'][] = $row['quantity'];*/
+    }
+
+    $food = $articles[$id];
 
     return $food;
 }

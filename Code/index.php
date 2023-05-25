@@ -21,6 +21,7 @@ require_once "Controller/signs.php";
 require_once "Controller/articles.php";
 require_once "Controller/foods.php";
 require_once "Controller/menus.php";
+require_once "Controller/shoppingList.php";
 
 if (isset($_GET['action'])) {
 
@@ -79,15 +80,6 @@ if (isset($_GET['action'])) {
             foodDetails($_GET);
             break;
 
-        case 'ingredientsAdd' :
-            ingredientAdd($_POST);
-            break;
-        case 'ingredientsList' :
-            ingredientsList();
-            break;
-        case 'ingredientsDelete' :
-            ingredientDelete($_POST);
-            break;
 
         case 'articlesAdd' :
             articleAdd($_POST);
@@ -98,16 +90,19 @@ if (isset($_GET['action'])) {
         case 'articlesDelete' :
             articleDelete($_GET);
             break;
-
+/*
         case 'shoppingListAdd' :
             shoppingListAdd($_POST);
             break;
-        case 'shoppingListList' :
-            shoppingListList();
+*/
+        case 'shoppingList' :
+            shoppingList($_GET);
             break;
+/*
         case 'shoppingListDelete' :
             shoppingListDelete($_POST);
             break;
+*/
 
         case 'signsAdd' :
             signAdd($_POST);

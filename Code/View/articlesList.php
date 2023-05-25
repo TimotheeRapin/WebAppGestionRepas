@@ -21,8 +21,6 @@ $title = 'Application web pour la gestion des repas en lien avec les commissions
 ?>
 
     <!-- Page content -->
-
-    <!-- Page content -->
     <main id="page" class="container">
         <h1>Liste des articles</h1>
 

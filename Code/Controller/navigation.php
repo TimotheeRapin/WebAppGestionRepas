@@ -19,14 +19,6 @@ function home()
 }
 
 /**
- * @brief This function is designed to display the shopping list page
- */
-function shoppingList()
-{
-    require_once "View/shoppingList.php";
-}
-
-/**
  * @brief This function is designed to inform the user that the resource requested doesn't exist (if the user modify the url manually)
  */
 function lost()

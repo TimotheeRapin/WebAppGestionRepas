@@ -13,6 +13,8 @@
  Types disponibles ('Starter', 'Dish', 'Dessert')
  */
  
+ # Il faut d'abord créer les articles
+ 
 # Selection de la DB
 USE gesrep_trn_TPI;
 
@@ -82,6 +84,37 @@ INSERT INTO foods (name, nbPersons, difficulty, instruction, type)
 SELECT 'Gâteau au fromage', 1, 3, '1. Mélanger les biscuits émiettés et le beurre fondu pour faire la croûte.<br>2. Battre le fromage à la crème, le sucre et la vanille.<br>3. Ajouter les œufs un par un et battre jusqu\'à consistance lisse.<br>4. Verser la préparation sur la croûte et cuire au four.', 'Dessert'
 WHERE NOT EXISTS (SELECT 1 FROM foods WHERE name = 'Gâteau au fromage');
 
+SET FOREIGN_KEY_CHECKS = 0; -- Désactive la vérification des contraintes de clé étrangère
+
+# Ajout des articles aux menus
+-- Menu 1: Salade César
+INSERT INTO foods_has_articles (foods_id, articles_id, quantity)
+VALUES
+    (1, 1, 1), -- Laitue
+    (1, 2, 50), -- Croûtons
+    (1, 3, 30), -- Parmesan
+    (1, 6, 1), -- Huile d'olive
+    (1, 7, 1); -- Basilic
+
+-- Menu 2: Bruschetta
+INSERT INTO foods_has_articles (foods_id, articles_id, quantity)
+VALUES
+    (2, 4, 150), -- Tomates
+    (2, 5, 200), -- Mozzarella
+    (2, 6, 1), -- Huile d'olive
+    (2, 7, 1), -- Basilic
+    (2, 8, 4); -- Pain
+
+
+-- Menu 4: Soupe à l'oignon
+INSERT INTO foods_has_articles (foods_id, articles_id, quantity)
+VALUES
+    (4, 11, 2), -- Oignons
+    (4, 12, 1), -- Ail
+    (4, 18, 1); -- Bouillon
+
+
+SET FOREIGN_KEY_CHECKS = 1; -- Réactive la vérification des contraintes de clé étrangère
 
 # affichage du résultat
 SELECT * FROM gesrep_trn_TPI.foods;

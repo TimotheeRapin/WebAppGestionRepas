@@ -32,6 +32,16 @@ $title = 'Application web pour la gestion des repas en lien avec les commissions
 
     <br>
 
+    <h3>Ingrédients</h3>
+    <p class="center">
+        <?php foreach ($food['articles'] as $article): ?>
+                <a href="index.php?action=articleDetails&id=<?=$article; ?>">
+                    <?=$article['quantity'] . " " . $article['unity'] . " de " . $article['articles']; ?>
+                </a><br>
+        <?php endforeach; ?>
+    </p>
+
+        <br>
     <a href="index.php?action=foodsList">
         <button>Retour à la liste des recettes</button>
     </a>
