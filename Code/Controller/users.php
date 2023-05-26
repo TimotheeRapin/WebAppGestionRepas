@@ -13,6 +13,7 @@
 /**
  * @brief This function is designed to create a new user session
  * @param $userEmailAddress : user unique id, must be meet RFC 5321/5322
+ * @return void
  */
 function createSession($userEmailAddress)
 {
@@ -37,6 +38,7 @@ function userName($userEmail, $userType){
 /**
  * @brief This function is designed to manage login request
  * @param $loginRequest : containing login fields required to authenticate the user
+ * @return void
  */
 function login($loginRequest)
 {
@@ -70,6 +72,7 @@ function login($loginRequest)
 /**
  * @brief This function is designed to manage logout request
  * @remark In case of login, the user session will be destroyed.
+ * @return void
  */
 function logout()
 {
@@ -80,7 +83,8 @@ function logout()
 
 /**
  * @brief This function is designed manage the register request
- * @param $register : contains all fields mandatory and optional to register a new user (coming from a form)
+ * @param $data : contains all fields mandatory and optional to register a new user (coming from a form)
+ * @return void
  */
 function register($data)
 {
@@ -90,6 +94,7 @@ function register($data)
 
 /**
  * @brief This function is designed to display the user list page
+ * @return void
  */
 function usersList()
 {
@@ -125,6 +130,11 @@ function userDelete($data){
     usersList();
 }
 
+/**
+ * @brief This function is designed to display the user add form
+ * @param $data
+ * @return void
+ */
 function userAdd($data){
     require_once "Model/usersManager.php";
     addUser($data);

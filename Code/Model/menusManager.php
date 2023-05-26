@@ -6,7 +6,7 @@
  * @authors                 Created by Timothée RAPIN
  * creation date            16.05.2023
  * update                   16.05.2023
- * version                  0.1
+ * version                  1.0
  * @note                    creation of the file
  */
 
@@ -14,6 +14,10 @@
 require_once "dbConnector.php";
 require_once "foodsManager.php";
 
+/**
+ * @brief This function is designed to display the menus list
+ * @return array
+ */
 function getMenusList () {
 
     $query = "SELECT menus.id, menus.title, menus.menuNumber, menus_has_foods.nbPersons, foods.id AS foodId, foods.name, foods.difficulty, foods.instruction, foods.type
@@ -53,6 +57,11 @@ function getMenusList () {
     return $result;
 }
 
+/**
+ * @brief This function is designed to add a menu in the database
+ * @param $data
+ * @return void
+ */
 function menuManage($data){
     $foods = getFoodsList();
     $menus = getMenusList();
@@ -121,6 +130,11 @@ function menuManage($data){
     }
 }
 
+/**
+ * @brief This function is designed to create a menu in the database
+ * @param $data
+ * @return true|null
+ */
 function createMenu($data) {
     $strSeparator = "'";
     $query = "INSERT INTO menus (title, menuNumber, accounts_id) VALUES (" . $strSeparator . $data['inputMenuTitle'] . $strSeparator . ", " . $strSeparator . $data['inputMenuNumber'] . $strSeparator . ", " . $_SESSION['id'] . ");";

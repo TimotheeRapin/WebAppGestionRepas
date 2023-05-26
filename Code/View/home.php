@@ -6,7 +6,7 @@
  * @author                  Created by Timothée RAPIN
  * Creation date            05.05.2021
  * update                   05.05.2021
- * @version                 0.1
+ * @version                 1.0
  * @note                    Creation of this file
  */
 // Start output buffering

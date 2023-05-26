@@ -6,7 +6,7 @@
  * @authors                 Created by Timothée RAPIN
  * creation date            11.05.2023
  * update                   11.05.2023
- * version                  0.1
+ * version                  1.0
  * @note                    creation of the file
  */
 
@@ -15,6 +15,7 @@ require_once "Model/articlesManager.php";
 
 /**
  * @brief This function is designed to display the articles list
+ * @return void
  */
 function articlesList()
 {
@@ -28,6 +29,8 @@ function articlesList()
 
 /**
  * @brief This function is designed to display the articles add form
+ * @param $data
+ * @return void
  */
 function articleAdd($data){
     articleManage($data);

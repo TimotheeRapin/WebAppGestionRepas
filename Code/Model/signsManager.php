@@ -6,8 +6,8 @@
  * @authors                 Created by Timothée RAPIN
  * creation date            11.05.2023
  * update                   11.05.2023
- * version                  0.1
- * @note                    creation of the file
+ * version                  1.1
+ * @note                    add delete signs in intermediaire table
  */
 
 // Include the database connection file
@@ -112,6 +112,9 @@ function deleteSign($signId){
     $signId = intval($signId); // Conversion en int
 
     $strSeparator = "'";
-    $query = "DELETE FROM signs WHERE signs.id = " . $strSeparator . $signId . $strSeparator;
+
+    // Suppression de l'enseigne dans la table "signs_has_articles" + suppression de l'enseigne dans la table "signs"
+    $query = "DELETE FROM signs_has_articles WHERE signs_has_articles.signs_id = " . $strSeparator . $signId . $strSeparator . ";
+                DELETE FROM signs WHERE signs.id = " . $strSeparator . $signId . $strSeparator . ";";
     $queryResult = executeQueryDelete($query);
 }

@@ -6,8 +6,8 @@
  * @author                  Created by Timothée RAPIN
  * Date de création         09.05.2023
  * update                   11.05.2023
- * @version                 1.0
- * @note                    Add users management
+ * @version                 1.1
+ * @note                    Add users delete in intermediate table
  */
 
 require_once "Model/dbConnector.php";
@@ -72,7 +72,7 @@ function firstNameLastName($userEmailAddress, $userType){
  * @return bool : "true" only if the user doesn't already exist. In all other cases will be "false".
  * @throws ModelDataBaseException : will be throw if something goes wrong with the database opening process
  */
-function registerAccount(/*$id, */$userFirstName, $userLastName, $userEmailAddress, $userPsw)
+function registerAccount(/*$id, */$userFirstName, $userLastName, $userEmailAddress, $userPsw, $userType)
 {
     $result = false;
 
@@ -80,7 +80,7 @@ function registerAccount(/*$id, */$userFirstName, $userLastName, $userEmailAddre
 
     $userHashPsw = password_hash($userPsw, PASSWORD_DEFAULT);
 
-    $registerQuery = "INSERT INTO accounts (firstName, lastName, email, password, type) VALUES ('$userFirstName', '$userLastName', '$userEmailAddress', '$userHashPsw', 'User')";
+    $registerQuery = "INSERT INTO accounts (firstName, lastName, email, password, type) VALUES ('$userFirstName', '$userLastName', '$userEmailAddress', '$userHashPsw', '$userType')";
 
     require_once 'Model/dbConnector.php';
     $queryResult = executeQueryInsert($registerQuery);
@@ -96,6 +96,12 @@ function registerAccount(/*$id, */$userFirstName, $userLastName, $userEmailAddre
  * @param $data
  */
 function userManage($data){
+    if (isset($data['inputUserType']) && ($data['inputUserType'] == "Administrator")){
+        $type = "Administrator";
+    }
+    else{
+        $type = "User";
+    }
     try {
         //variable set
         if (isset($data['inputUserEmailAddress']) && isset($data['inputUserPsw']) && isset($data['inputUserPswRepeat'])) {
@@ -126,7 +132,7 @@ function userManage($data){
                             require_once "Model/usersManager.php";
 
                             // Si le compte à bien été créé dans la BDD
-                            if (registerAccount($data['inputUserFirstName'], $data['inputUserLastName'], $data['inputUserEmailAddress'], $data['inputUserPsw'])) {
+                            if (registerAccount($data['inputUserFirstName'], $data['inputUserLastName'], $data['inputUserEmailAddress'], $data['inputUserPsw'], $type)) {
                                 // Crée la séssion si elle n'éxiste pas
                                 if (!isset($_SESSION['userEmailAddress'])) {
                                     createSession($data['inputUserEmailAddress'], 0);
@@ -360,7 +366,20 @@ function deleteUser($userId){
     $userId = intval($userId); // Conversion en int
 
     $strSeparator = "'";
-    $query = "DELETE FROM accounts WHERE accounts.id = " . $strSeparator . $userId . $strSeparator;
+
+    // Récupération de tous les menus de l'utilisateur pour pouvoir les supprimer
+    $query = "SELECT menus.id FROM menus WHERE menus.accounts_id = " . $strSeparator . $userId . $strSeparator;
+    $queryResult = executeQuerySelect($query);
+
+    // Suppression des plats des menus de l'utilisateur dans la table "menus_has_foods"
+    foreach ($queryResult as $menuId){
+        $query = "DELETE FROM menus_has_foods WHERE menus_has_foods.menus_id = " . $strSeparator . $menuId[0] . $strSeparator;
+        $queryResult = executeQueryDelete($query);
+    }
+
+    // Suppression se l'utilisateur ainsi que de ses menus dans la table "menus"
+    $query = "DELETE FROM menus WHERE menus.accounts_id = " . $strSeparator . $userId . $strSeparator . ";
+                DELETE FROM accounts WHERE accounts.id = " . $strSeparator . $userId . $strSeparator . ";";
     $queryResult = executeQueryDelete($query);
 }
 
@@ -394,6 +413,15 @@ function deleteAdministrator($userId){
  * @param $data
  */
 function addUser($data){
+    if (isset($data['inputUserType']) && ($data['inputUserType'] == "Administrator")){
+        $type = "Administrator";
+    }
+    elseif (isset($_GET['type']) && ($_GET['type'] == "Administrator")){
+        $type = "Administrator";
+    }
+    else{
+        $type = "User";
+    }
     try {
         //variable set
         if (isset($data['inputUserEmailAddress']) && isset($data['inputUserPsw']) && isset($data['inputUserPswRepeat'])) {
@@ -424,7 +452,7 @@ function addUser($data){
                             require_once "Model/usersManager.php";
 
                             // Si le compte à bien été créé dans la BDD
-                            if (registerAccount($data['inputUserFirstName'], $data['inputUserLastName'], $data['inputUserEmailAddress'], $data['inputUserPsw'])) {
+                            if (registerAccount($data['inputUserFirstName'], $data['inputUserLastName'], $data['inputUserEmailAddress'], $data['inputUserPsw'], $type)) {
                                 $registerErrorMessage = null;
                                 require "View/usersList.php";
                             } else {

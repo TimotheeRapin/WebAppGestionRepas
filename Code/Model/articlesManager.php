@@ -6,12 +6,16 @@
  * @author                  Created by Timothée RAPIN
  * Creation date            11.05.2023
  * update                   11.05.2023
- * @version                 0.1
+ * @version                 1.0
  */
 
 // Include the database connection file
 require_once "dbConnector.php";
 
+/**
+ * @brief This function is designed to display the articles list
+ * @return array
+ */
 function getArticlesList()
 {
     $query = "SELECT articles.id, articles.name, articles.quantity, articles.description, articles.unity, signs.name AS signs, signs_has_articles.price
@@ -149,6 +153,7 @@ function articleManage($data){
  * @param $quantity
  * @param $description
  * @param $unity
+ * @param $articlesPrices
  * @return bool
  */
 function createArticle($name, $quantity, $description, $unity, $articlesPrices){
@@ -178,6 +183,13 @@ function createArticle($name, $quantity, $description, $unity, $articlesPrices){
     return $result;
 }
 
+/**
+ * @brief This function is designed to get the id of an article
+ * @param $name
+ * @param $quantity
+ * @param $unity
+ * @return mixed
+ */
 function getArticleId($name, $quantity, $unity){
     $strSeparator = "'";
     $query = "SELECT articles.id FROM articles
@@ -190,6 +202,8 @@ function getArticleId($name, $quantity, $unity){
 
 /**
  * @brief This function is designed to delete an article an all its prices
+ * @param $articleId
+ * @return void
  */
 function deleteArticle($articleId){
     $articleId = intval($articleId); // Conversion en int

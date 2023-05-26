@@ -6,7 +6,7 @@
  * @authors                 Created by Timothée RAPIN
  * creation date            15.05.2023
  * update                   15.05.2023
- * version                  0.1
+ * version                  1.0
  * @note                    creation of the file
  */
 
@@ -15,6 +15,7 @@ require_once "Model/foodsManager.php";
 
 /**
  * @brief This function is designed to display the foods list
+ * @return void
  */
 function foodsList()
 {
@@ -31,6 +32,8 @@ function foodsList()
 
 /**
  * @brief This function is designed to display the foods add form
+ * @param $data
+ * @return void
  */
 function foodAdd($data)
 {
@@ -40,6 +43,8 @@ function foodAdd($data)
 
 /**
  * @brief This function is designed to display details of a food
+ * @param $data
+ * @return void
  */
 function foodDetails($data)
 {

@@ -6,7 +6,7 @@
  * @authors                 Created by Timothée RAPIN
  * creation date            11.05.2023
  * update                   11.05.2023
- * version                  0.1
+ * version                  1.0
  * @note                    creation of the file
  */
 
@@ -15,6 +15,7 @@ require_once "Model/signsManager.php";
 
 /**
  * @brief This function is designed to display the signs list
+ * @return void
  */
 function signsList()
 {
@@ -27,6 +28,8 @@ function signsList()
 
 /**
  * @brief This function is designed to display the signs add form
+ * @param $data
+ * @return void
  */
 function signAdd($data)
 {
@@ -36,6 +39,8 @@ function signAdd($data)
 
 /**
  * @brief This function is designed to delete a sign from the database
+ * @param $data
+ * @return void
  */
 function signsDelete($data){
 

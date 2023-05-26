@@ -6,12 +6,13 @@
  * @author                  Created by Timothée RAPIN
  * Creation date            05.05.2021
  * update                   05.05.2021
- * @version                 0.1
+ * @version                 1.0
  * @note                    Creation of this file
  */
 
 /**
  * @brief This function is designed to display the home page
+ * @return void
  */
 function home()
 {
@@ -20,6 +21,7 @@ function home()
 
 /**
  * @brief This function is designed to inform the user that the resource requested doesn't exist (if the user modify the url manually)
+ * @return void
  */
 function lost()
 {

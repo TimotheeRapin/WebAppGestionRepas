@@ -13,10 +13,22 @@
 // Include the database connection file
 require_once "dbConnector.php";
 
+/**
+ * @brief This function is designed to display the shopping list
+ * @param $displayType
+ * @return array|null
+ */
 function getArticlesListDisplay($displayType){
 
     $strSeparator = "'";
 
+    // récupère les article dans la liste de commission de la personne connectée
+    $query = "SELECT articles.id FROM articles
+                INNER JOIN `shopping lists` ON articles.id = `shopping lists`.articles_id
+                WHERE `shopping lists`.name = " . $_SESSION['id'] . ";";
+    $articles = executeQuerySelect($query);
+
+/*
     // Récupère tous les recettes (id) de tous les menus de la personne connectée
     $query = "SELECT menus_has_foods.foods_id 
                 FROM menus_has_foods 
@@ -48,7 +60,7 @@ function getArticlesListDisplay($displayType){
             }
         }
     }
-
+*/
 
     // Articles les moins chers dans une seule enseigne
     if ($displayType == "oneSign") {
@@ -147,6 +159,80 @@ function getArticlesListDisplay($displayType){
         }
     }
 
-        $articlesList = $queryResult;
+    $articlesList = $queryResult;
     return $articlesList;
 }
+
+function createShoppingList()
+{
+    // Créer une liste de commissions si elle n'existe pas
+    $queryResult = NULL;
+    $query = "SELECT id FROM `shopping lists` WHERE name = " . $_SESSION['id'] . ";";
+    $idShoppingList = executeQuerySelect($query);
+
+    if ($queryResult != NULL) {
+        $query = "INSERT INTO `shopping lists` (name) VALUES (" . $_SESSION['id'] . ");";
+        executeQueryInsert($query);
+
+        $query = "SELECT id FROM `shopping lists` WHERE name = " . $_SESSION['id'] . ";";
+        $idShoppingList = executeQuerySelect($query);
+    }
+
+    // ajouter les articles dans la liste de commissions
+    // Récupère tous les recettes (id) de tous les menus de la personne connectée
+    $query = "SELECT menus_has_foods.foods_id 
+                FROM menus_has_foods 
+                INNER JOIN menus ON menus_has_foods.menus_id = menus.id
+                WHERE menus.accounts_id = " . $_SESSION['id'] . ";";
+
+    $foods = executeQuerySelect($query);
+
+
+    // Récupère tous les articles des recettes
+    $articles = array();
+    foreach ($foods as $food) {
+        $query = "SELECT foods_has_articles.articles_id, foods_has_articles.quantity
+                FROM foods_has_articles
+                WHERE foods_has_articles.foods_id = " . $food['foods_id'] . ";";
+
+        $queryResult = executeQuerySelect($query);
+
+        foreach ($queryResult as $row) {
+            $articleId = $row['articles_id'];
+            // Permet de rassembler les articles qui ont le même id dans une même ligne
+            if (!isset($articles[$articleId])) {
+                $articles[$articleId] = array(
+                    'id' => $row['articles_id'],
+                    'quantity' => $row['quantity']
+                );
+            } else {
+                $articles[$articleId]['quantity'] += $row['quantity'];
+            }
+        }
+    }
+
+    // récupère les articles à ajouter dans la liste de commissions
+    $queryResult = array();
+
+    foreach ($articles as $article) {
+        $query = "SELECT articles.id
+                        FROM articles
+                        WHERE articles.id = " . $article['id'] . ";";
+
+        $articles = executeQuerySelect($query);
+        $queryResult = array_merge($queryResult, $articles); // Source : https://www.php.net/manual/en/function.array-merge.php
+    }
+
+    // ajoute les articles dans la liste de commissions
+    foreach ($queryResult as $article) {
+        $query = "INSERT INTO `articles_has_shopping lists` (articles_id, `shopping lists_id`) VALUES (" . $article['id'] . ", " . $idShoppingList[0]['id'] . ");";
+        executeQueryInsert($query);
+    }
+}
+
+/*
+function deleteArticleInShoppingList($articleId)
+{
+    $query = "DELETE FROM shopping_list_has_articles WHERE shopping_list_id = " . $_SESSION['shoppingListId'] . " AND articles_id = " . $articleId . ";";
+    executeQueryDelete($query);
+}*/

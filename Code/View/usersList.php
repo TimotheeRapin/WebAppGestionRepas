@@ -108,6 +108,11 @@ $title = 'Application web pour la gestion des repas en lien avec les commissions
                 </tr>
             <?php endforeach; ?>
         </table>
+        <!--
+        <a href="index.php?action=usersAdd&type=Administrator">
+            <button>Ajouter un administrateur</button>
+        </a>
+        -->
     </main>
 
 

@@ -90,19 +90,17 @@ if (isset($_GET['action'])) {
         case 'articlesDelete' :
             articleDelete($_GET);
             break;
-/*
+
         case 'shoppingListAdd' :
-            shoppingListAdd($_POST);
+            shoppingListAdd();
             break;
-*/
         case 'shoppingList' :
             shoppingList($_GET);
             break;
-/*
-        case 'shoppingListDelete' :
-            shoppingListDelete($_POST);
+        case 'shoppingListDeleteArticle' :
+            shoppingListDeleteArticle($_GET);
             break;
-*/
+
 
         case 'signsAdd' :
             signAdd($_POST);

@@ -6,7 +6,7 @@
  * @authors                 Created by Timothée RAPIN
  * creation date            15.05.2023
  * update                   15.05.2023
- * version                  0.1
+ * version                  1.0
  * @note                    creation of the file
  */
 
@@ -16,6 +16,7 @@ require_once "dbConnector.php";
 /**
  * @brief This function is designed to display the foods list
  * @param $data contains the data to add
+ * @return array
  */
 function getFoodsList()
 {
@@ -43,6 +44,7 @@ function getFoodsList()
 /**
  * @brief This function is designed to add a food in the database
  * @param $data contains the data to add
+ * @return void
  */
 function foodsManage($data){
     try {
@@ -133,6 +135,12 @@ function foodsManage($data){
     }
 }
 
+/**
+ * @brief This function is designed to add a food in the database
+ * @param $data
+ * @return true|null
+ * @throws Exception
+ */
 function foodsAdd($data){
     $result = false;
     $strSeparator = "'";
@@ -159,7 +167,8 @@ function foodsAdd($data){
 
 /**
  * @brief This function is designed to display details of a food
- * @param $data contains the data to delete
+ * @param $id
+ * @return array|mixed
  */
 function getFoodDetails($id){
 

@@ -6,7 +6,7 @@
  * @authors                 Created by Timothée RAPIN
  * creation date            16.05.2023
  * update                   16.05.2023
- * version                  0.1
+ * version                  1.0
  * @note                    creation of the file
  */
 

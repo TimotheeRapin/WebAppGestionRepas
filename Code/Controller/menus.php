@@ -6,7 +6,7 @@
  * @authors                 Created by Timothée RAPIN
  * creation date            16.05.2023
  * update                   16.05.2023
- * version                  0.1
+ * version                  1.0
  * @note                    creation of the file
  */
 
@@ -16,6 +16,7 @@ require_once "Model/foodsManager.php";
 
 /**
  * @brief This function is designed to display the menus list
+ * @return void
  */
 function menusList()
 {
@@ -26,6 +27,11 @@ function menusList()
     require_once "View/menusList.php";
 }
 
+/**
+ * @brief This function is designed to display the menus add form
+ * @param $data
+ * @return void
+ */
 function menuAdd($data)
 {
     menuManage($data);
