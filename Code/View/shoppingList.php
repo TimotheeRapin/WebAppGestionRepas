@@ -29,13 +29,13 @@ $title = 'Application web pour la gestion des repas en lien avec les commissions
         <?php else: ?>
             <h2>Liste pour l'enseigne la moins cher</h2>
         <?php endif; ?>
-
+<!--
         <a href="index.php?action=shoppingListAdd">
             <button>Générer la liste à partir des menus</button>
         </a><br><br><br>
         <a href="index.php?action=shoppingList&displayType=oneSign">
             <button>Enseigne la moins cher</button>
-        </a><br>
+        </a><br>-->
         <a href="index.php?action=shoppingList&displayType=allSigns">
             <button>Toutes les enseignes</button>
         </a><br>
@@ -47,8 +47,8 @@ $title = 'Application web pour la gestion des repas en lien avec les commissions
                     <th>Description</th>
                     <th>Quantité</th>
                     <th>Prix</th>
-                    <th>Enseigne</th>
-                    <th>Supprimer</th>
+                    <th>Enseigne</th><!--
+                    <th>Supprimer</th>-->
                 </tr>
             </thead>
             <tbody>
@@ -63,12 +63,12 @@ $title = 'Application web pour la gestion des repas en lien avec les commissions
                                 <?=$article['unity']; ?>
                             </td>
                             <td><?=$article['price']; ?></td>
-                            <td><?=$article['signs']; ?></td>
+                            <td><?=$article['signs']; ?></td><!--
                             <td>
                                 <a href="index.php?action=shoppingListDeleteArticle&id=<?=$article['id']; ?>">
                                     <button>Supprimer</button>
                                 </a>
-                            </td>
+                            </td>-->
                         </tr>
                     <?php endforeach; ?>
                 <?php endif; ?>

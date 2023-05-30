@@ -23,12 +23,13 @@ function getArticlesListDisplay($displayType){
     $strSeparator = "'";
 
     // récupère les article dans la liste de commission de la personne connectée
+    /*
     $query = "SELECT articles.id FROM articles
                 INNER JOIN `shopping lists` ON articles.id = `shopping lists`.articles_id
                 WHERE `shopping lists`.name = " . $_SESSION['id'] . ";";
     $articles = executeQuerySelect($query);
+*/
 
-/*
     // Récupère tous les recettes (id) de tous les menus de la personne connectée
     $query = "SELECT menus_has_foods.foods_id 
                 FROM menus_has_foods 
@@ -60,7 +61,7 @@ function getArticlesListDisplay($displayType){
             }
         }
     }
-*/
+
 
     // Articles les moins chers dans une seule enseigne
     if ($displayType == "oneSign") {
@@ -102,7 +103,7 @@ function getArticlesListDisplay($displayType){
 
 
 
-        /*
+
         foreach ($foods as $food){
             $query = "SELECT articles.id, articles.name, articles.quantity, articles.description, articles.unity, signs.name AS signs, signs_has_articles.price
                     FROM articles
@@ -133,7 +134,7 @@ function getArticlesListDisplay($displayType){
                 $articles[$articleId]['prices'][$row['signs']] = $row['price'];
             }
             $queryResult = $articles;
-        }*/
+        }
     }
 
     // Articles les moins chers dans toutes les enseignes
